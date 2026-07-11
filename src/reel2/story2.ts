@@ -3,10 +3,10 @@ import { staticFile } from "remotion";
 export const FPS = 30;
 const sec = (s: number) => Math.round(s * FPS);
 
-/** Section 1: Marcos places the chair + "Barcelona tiene un problema" (main 7–15s). */
+/** Section 1: Marcos places the chair + "Barcelona tiene un problema" (main 7–17s). */
 export const INTRO = {
   src: staticFile("reel-02/seg/base_intro.mp4"),
-  durationInFrames: sec(8),
+  durationInFrames: sec(10),
 };
 
 /** Section 2: the explanation (main 55–64s). */
