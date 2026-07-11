@@ -30,10 +30,13 @@ export const EXPLAIN_BROLL: Broll[] = [
   { src: staticFile("reel-02/seg/broll_people.mp4"), from: sec(5.6), durationInFrames: sec(2.8) }, // payoff: gente en la silla
 ];
 
+/** B&W cold open: "Barcelona tiene un problema" in red. */
+export const COLD_OPEN_DURATION = sec(2.6);
 export const INTRO_DURATION = INTRO.durationInFrames;
 export const EXPLAIN_DURATION = EXPLAIN.durationInFrames;
 export const CTA_DURATION = sec(4);
-export const TOTAL_DURATION = INTRO_DURATION + EXPLAIN_DURATION + CTA_DURATION;
+export const TOTAL_DURATION =
+  COLD_OPEN_DURATION + INTRO_DURATION + EXPLAIN_DURATION + CTA_DURATION;
 
 /** Editorial hook headline over the opening (not a speech caption). */
 export const HOOK_LINE_1 = "¿Por qué todos quieren";

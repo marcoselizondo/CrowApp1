@@ -10,9 +10,11 @@ import { EndCard } from "../donnit/EndCard";
 import { COLORS } from "../donnit/theme";
 import { WaitForFonts } from "../donnit/WaitForFonts";
 import { Wordmark } from "../donnit/Wordmark";
+import { ColdOpen } from "./ColdOpen";
 import { HookText } from "./HookText";
 import { LowerThird } from "./LowerThird";
 import {
+  COLD_OPEN_DURATION,
   CTA_DURATION,
   EXPLAIN,
   EXPLAIN_BROLL,
@@ -111,8 +113,17 @@ export const Reel2: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.ink }}>
       <WaitForFonts>
+        {/* COLD OPEN — B&W "Barcelona tiene un problema" en rojo */}
+        <Sequence durationInFrames={COLD_OPEN_DURATION} name="cold-open">
+          <ColdOpen />
+        </Sequence>
+
         {/* SECTION 1 — intro: Marcos coloca la silla + "Barcelona tiene un problema" */}
-        <Sequence durationInFrames={INTRO_DURATION} name="intro">
+        <Sequence
+          from={COLD_OPEN_DURATION}
+          durationInFrames={INTRO_DURATION}
+          name="intro"
+        >
           <SectionBase src={INTRO.src} />
           <BrollOverlay b={HOOK_OVERLAY} />
           <Sequence durationInFrames={HOOK_OVERLAY.durationInFrames} name="hook">
@@ -123,7 +134,7 @@ export const Reel2: React.FC = () => {
 
         {/* SECTION 2 — explicación */}
         <Sequence
-          from={INTRO_DURATION}
+          from={COLD_OPEN_DURATION + INTRO_DURATION}
           durationInFrames={EXPLAIN_DURATION}
           name="explain"
         >
@@ -138,7 +149,7 @@ export const Reel2: React.FC = () => {
 
         {/* CTA */}
         <Sequence
-          from={INTRO_DURATION + EXPLAIN_DURATION}
+          from={COLD_OPEN_DURATION + INTRO_DURATION + EXPLAIN_DURATION}
           durationInFrames={CTA_DURATION}
           name="cta"
         >
