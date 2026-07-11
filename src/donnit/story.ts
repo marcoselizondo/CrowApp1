@@ -12,14 +12,16 @@ export type Segment = {
   durationInFrames: number;
 };
 
+const REEL = "reel-01-mueble/seg";
+
 export const SEGMENTS: Segment[] = [
-  { src: staticFile("seg/segA.mp4"), durationInFrames: sec(2.6) }, // hook: mueble por el pasillo
-  { src: staticFile("seg/segB.mp4"), durationInFrames: sec(3.0) }, // vecino sonriendo, cargando
-  { src: staticFile("seg/segC.mp4"), durationInFrames: sec(3.0) }, // subiendo, otro vecino
-  { src: staticFile("seg/segD.mp4"), durationInFrames: sec(3.2) }, // plano héroe del mueble
-  { src: staticFile("seg/segE.mp4"), durationInFrames: sec(3.0) }, // entrando al piso, la vecina
-  { src: staticFile("seg/segF.mp4"), durationInFrames: sec(3.0) }, // colocándolo
-  { src: staticFile("seg/segG.mp4"), durationInFrames: sec(3.5) }, // vecina + vecino sonriendo
+  { src: staticFile(`${REEL}/segA.mp4`), durationInFrames: sec(2.6) }, // hook: mueble por el pasillo
+  { src: staticFile(`${REEL}/segB.mp4`), durationInFrames: sec(3.0) }, // vecino sonriendo, cargando
+  { src: staticFile(`${REEL}/segC.mp4`), durationInFrames: sec(3.0) }, // subiendo, otro vecino
+  { src: staticFile(`${REEL}/segD.mp4`), durationInFrames: sec(3.2) }, // plano héroe del mueble
+  { src: staticFile(`${REEL}/segE.mp4`), durationInFrames: sec(3.0) }, // entrando al piso, la vecina
+  { src: staticFile(`${REEL}/segF.mp4`), durationInFrames: sec(3.0) }, // colocándolo
+  { src: staticFile(`${REEL}/segG.mp4`), durationInFrames: sec(3.5) }, // vecina + vecino sonriendo
 ];
 
 export const VIDEO_DURATION = SEGMENTS.reduce(
