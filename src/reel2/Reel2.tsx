@@ -4,6 +4,7 @@ import {
   OffthreadVideo,
   Sequence,
   useCurrentFrame,
+  useVideoConfig,
 } from "remotion";
 import { EndCard } from "../donnit/EndCard";
 import { COLORS } from "../donnit/theme";
@@ -12,27 +13,39 @@ import { Wordmark } from "../donnit/Wordmark";
 import { HookText } from "./HookText";
 import { LowerThird } from "./LowerThird";
 import {
-  BASE,
-  BROLL,
   CTA_DURATION,
-  STORY_DURATION,
+  EXPLAIN,
+  EXPLAIN_BROLL,
+  EXPLAIN_DURATION,
+  HOOK_OVERLAY,
+  INTRO,
+  INTRO_DURATION,
+  type Broll,
 } from "./story2";
 
-/** Base layer: Marcos talking, audio fades out at the very end. */
-const BaseVideo: React.FC = () => (
-  <OffthreadVideo
-    src={BASE.src}
-    volume={(f) =>
-      interpolate(f, [BASE.durationInFrames - 18, BASE.durationInFrames], [1, 0], {
-        extrapolateLeft: "clamp",
-        extrapolateRight: "clamp",
-      })
-    }
-    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-  />
-);
+/** Plays a base clip (video+audio) with short audio fades to smooth seams. */
+const SectionBase: React.FC<{
+  src: string;
+  fadeOutFrames?: number;
+}> = ({ src, fadeOutFrames = 4 }) => {
+  const { durationInFrames } = useVideoConfig();
+  return (
+    <OffthreadVideo
+      src={src}
+      volume={(f) =>
+        interpolate(
+          f,
+          [0, 3, durationInFrames - fadeOutFrames, durationInFrames],
+          [0, 1, 1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+        )
+      }
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    />
+  );
+};
 
-/** A b-roll overlay that fades in/out (soft cut) with a gentle push-in. */
+/** A muted b-roll overlay that fades in/out with a gentle push-in. */
 const BrollClip: React.FC<{ src: string; durationInFrames: number }> = ({
   src,
   durationInFrames,
@@ -49,7 +62,9 @@ const BrollClip: React.FC<{ src: string; durationInFrames: number }> = ({
   });
   return (
     <AbsoluteFill style={{ opacity }}>
-      <AbsoluteFill style={{ transform: `scale(${scale})`, backgroundColor: "black" }}>
+      <AbsoluteFill
+        style={{ transform: `scale(${scale})`, backgroundColor: "black" }}
+      >
         <OffthreadVideo
           src={src}
           muted
@@ -60,10 +75,16 @@ const BrollClip: React.FC<{ src: string; durationInFrames: number }> = ({
   );
 };
 
+const BrollOverlay: React.FC<{ b: Broll }> = ({ b }) => (
+  <Sequence from={b.from} durationInFrames={b.durationInFrames}>
+    <BrollClip src={b.src} durationInFrames={b.durationInFrames} />
+  </Sequence>
+);
+
 /** Small logo chip that fades in at the very start and out. */
 const LogoIntro: React.FC = () => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [0, 10, 70, 84], [0, 1, 1, 0], {
+  const opacity = interpolate(frame, [0, 10, 60, 74], [0, 1, 1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -90,36 +111,37 @@ export const Reel2: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.ink }}>
       <WaitForFonts>
-        <Sequence durationInFrames={STORY_DURATION} name="story">
-          <BaseVideo />
-
-          {BROLL.map((b, i) => (
-            <Sequence
-              key={i}
-              from={b.from}
-              durationInFrames={b.durationInFrames}
-              name={`broll-${i}`}
-            >
-              <BrollClip src={b.src} durationInFrames={b.durationInFrames} />
-            </Sequence>
-          ))}
-
-          {/* Hook headline over the opening b-roll */}
-          <Sequence durationInFrames={BROLL[0].durationInFrames} name="hook">
+        {/* SECTION 1 — intro: Marcos coloca la silla + "Barcelona tiene un problema" */}
+        <Sequence durationInFrames={INTRO_DURATION} name="intro">
+          <SectionBase src={INTRO.src} />
+          <BrollOverlay b={HOOK_OVERLAY} />
+          <Sequence durationInFrames={HOOK_OVERLAY.durationInFrames} name="hook">
             <HookText />
           </Sequence>
-
-          {/* Logo chip intro */}
           <LogoIntro />
+        </Sequence>
 
-          {/* Founder lower-third while Marcos is first on camera */}
-          <Sequence from={100} durationInFrames={150} name="lower-third">
+        {/* SECTION 2 — explicación */}
+        <Sequence
+          from={INTRO_DURATION}
+          durationInFrames={EXPLAIN_DURATION}
+          name="explain"
+        >
+          <SectionBase src={EXPLAIN.src} fadeOutFrames={16} />
+          {EXPLAIN_BROLL.map((b, i) => (
+            <BrollOverlay key={i} b={b} />
+          ))}
+          <Sequence from={6} durationInFrames={150} name="lower-third">
             <LowerThird />
           </Sequence>
         </Sequence>
 
-        {/* CTA end card */}
-        <Sequence from={STORY_DURATION} durationInFrames={CTA_DURATION} name="cta">
+        {/* CTA */}
+        <Sequence
+          from={INTRO_DURATION + EXPLAIN_DURATION}
+          durationInFrames={CTA_DURATION}
+          name="cta"
+        >
           <EndCard />
         </Sequence>
       </WaitForFonts>
