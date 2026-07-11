@@ -6,7 +6,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { COLORS, FONT_FAMILY } from "./theme";
-import { Wordmark } from "./Wordmark";
+import { DonnitLogo } from "./Wordmark";
 
 export const EndCard: React.FC = () => {
   const frame = useCurrentFrame();
@@ -37,14 +37,19 @@ export const EndCard: React.FC = () => {
         fontFamily: FONT_FAMILY,
       }}
     >
+      {/* App icon on a white tile so it pops on the green background */}
       <div
         style={{
           transform: `translateY(${logoY}px)`,
           opacity: pop,
-          marginBottom: 40,
+          marginBottom: 54,
+          background: COLORS.white,
+          padding: 30,
+          borderRadius: 60,
+          boxShadow: "0 24px 60px rgba(20,38,27,0.28)",
         }}
       >
-        <Wordmark size={120} onLight />
+        <DonnitLogo size={200} />
       </div>
 
       <div
@@ -81,7 +86,7 @@ export const EndCard: React.FC = () => {
 
         <div
           style={{
-            marginTop: 70,
+            marginTop: 64,
             fontWeight: 700,
             fontSize: 36,
             color: COLORS.white,
