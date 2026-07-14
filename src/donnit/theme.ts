@@ -1,4 +1,12 @@
 import { fontFamily, loadFont } from "@remotion/google-fonts/DMSans";
+import {
+  fontFamily as balooFamily,
+  loadFont as loadBaloo,
+} from "@remotion/google-fonts/Baloo2";
+import {
+  fontFamily as antonFamily,
+  loadFont as loadAnton,
+} from "@remotion/google-fonts/Anton";
 
 /**
  * Donnit brand tokens.
@@ -26,7 +34,18 @@ export const HEIGHT = 1920;
 const font = loadFont("normal", {
   weights: ["400", "500", "700", "800"],
 });
+// Chunky, rounded subtitle font (distinct from the typical viral reel look).
+const baloo = loadBaloo("normal", { weights: ["700", "800"] });
+// Heavy, condensed impact font for the cold open.
+const anton = loadAnton("normal", { weights: ["400"] });
 
-export const FONT_FAMILY = fontFamily;
+export const FONT_FAMILY = fontFamily; // brand default (DM Sans)
+export const SUBTITLE_FONT = balooFamily; // Baloo 2 — kinetic subtitles
+export const IMPACT_FONT = antonFamily; // Anton — cold-open title
 
-export const waitForDonnitFonts = () => font.waitUntilDone();
+export const waitForDonnitFonts = () =>
+  Promise.all([
+    font.waitUntilDone(),
+    baloo.waitUntilDone(),
+    anton.waitUntilDone(),
+  ]);

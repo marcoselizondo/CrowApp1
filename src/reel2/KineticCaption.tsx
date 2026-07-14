@@ -1,5 +1,5 @@
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { COLORS, FONT_FAMILY } from "../donnit/theme";
+import { COLORS, SUBTITLE_FONT } from "../donnit/theme";
 import type { KCaption, Word } from "./subtitles";
 
 const RED = "#ff3b30";
@@ -65,7 +65,7 @@ export const KineticCaption: React.FC<{ caption: KCaption }> = ({ caption }) => 
         alignItems: "center",
         gap: "10px 4px",
         padding: "0 70px",
-        fontFamily: FONT_FAMILY,
+        fontFamily: SUBTITLE_FONT,
         textAlign: "center",
         opacity: exit,
       }}

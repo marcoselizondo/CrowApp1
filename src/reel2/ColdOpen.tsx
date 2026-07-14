@@ -7,7 +7,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { FONT_FAMILY } from "../donnit/theme";
+import { IMPACT_FONT } from "../donnit/theme";
 
 const RED = "#ff2e2e";
 
@@ -67,14 +67,14 @@ export const ColdOpen: React.FC = () => {
         >
           <div
             style={{
-              fontFamily: FONT_FAMILY,
-              fontWeight: 800,
-              fontSize: 100,
-              lineHeight: 1.02,
-              letterSpacing: -2,
+              fontFamily: IMPACT_FONT,
+              fontWeight: 400,
+              fontSize: 132,
+              lineHeight: 0.94,
+              letterSpacing: 1,
               color: RED,
               textTransform: "uppercase",
-              textShadow: "0 6px 30px rgba(0,0,0,0.6)",
+              textShadow: "0 8px 34px rgba(0,0,0,0.65)",
             }}
           >
             Barcelona
