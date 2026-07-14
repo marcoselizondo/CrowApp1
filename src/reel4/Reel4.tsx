@@ -133,7 +133,7 @@ export const Reel4: React.FC = () => {
           <SectionBase src={SEG.baseB.src} />
           <Scrim />
           <Caps caps={CAPS_B} />
-          <Sequence from={0} durationInFrames={46}>
+          <Sequence from={0} durationInFrames={58}>
             <DonnitReveal />
           </Sequence>
         </Sequence>
