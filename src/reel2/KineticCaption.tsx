@@ -7,7 +7,7 @@ const BASE = 66;
 const STAGGER = 3; // frames between each word appearing
 
 const sizeFor = (s?: Word["s"]) =>
-  s === "big" || s === "biggreen" ? BASE * 1.42 : s === "red" ? BASE * 1.22 : BASE;
+  s === "big" || s === "biggreen" ? BASE * 1.42 : BASE;
 
 /** One word with its own pop-in and emphasis style. */
 const WordSpan: React.FC<{ word: Word; index: number }> = ({ word, index }) => {
@@ -21,6 +21,9 @@ const WordSpan: React.FC<{ word: Word; index: number }> = ({ word, index }) => {
   const scale = interpolate(appear, [0, 1], [0.5, 1]);
   const y = interpolate(appear, [0, 1], [26, 0]);
   const green = word.s === "green" || word.s === "biggreen";
+  const red = word.s === "red";
+  // Positive words get a green marker, negative words the same marker in red.
+  const marker = green ? COLORS.green : red ? RED : undefined;
 
   return (
     <span
@@ -31,12 +34,12 @@ const WordSpan: React.FC<{ word: Word; index: number }> = ({ word, index }) => {
         fontSize: sizeFor(word.s),
         fontWeight: 800,
         lineHeight: 1.05,
-        color: green ? COLORS.ink : word.s === "red" ? RED : COLORS.white,
-        background: green ? COLORS.green : undefined,
-        borderRadius: green ? 14 : undefined,
-        padding: green ? "0 16px" : undefined,
+        color: marker ? COLORS.ink : COLORS.white,
+        background: marker,
+        borderRadius: marker ? 14 : undefined,
+        padding: marker ? "0 16px" : undefined,
         margin: "0 2px",
-        textShadow: green ? "none" : "0 6px 26px rgba(0,0,0,0.6)",
+        textShadow: marker ? "none" : "0 6px 26px rgba(0,0,0,0.6)",
       }}
     >
       {word.t}
