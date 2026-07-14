@@ -12,7 +12,9 @@ import { WaitForFonts } from "../donnit/WaitForFonts";
 import { Wordmark } from "../donnit/Wordmark";
 import { ColdOpen } from "./ColdOpen";
 import { HookText } from "./HookText";
+import { KineticCaption } from "./KineticCaption";
 import { LowerThird } from "./LowerThird";
+import { EXPLAIN_CAPTIONS, INTRO_CAPTIONS, type KCaption } from "./subtitles";
 import {
   COLD_OPEN_DURATION,
   CTA_DURATION,
@@ -24,6 +26,28 @@ import {
   INTRO_DURATION,
   type Broll,
 } from "./story2";
+
+/** Bottom scrim so kinetic captions stay legible over any footage. */
+const CaptionScrim: React.FC = () => (
+  <AbsoluteFill
+    style={{
+      background:
+        "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.22) 28%, rgba(0,0,0,0) 48%)",
+    }}
+  />
+);
+
+/** Renders a set of kinetic captions (each in its own local Sequence). */
+const Captions: React.FC<{ captions: KCaption[] }> = ({ captions }) => (
+  <>
+    <CaptionScrim />
+    {captions.map((c, i) => (
+      <Sequence key={i} from={c.from} durationInFrames={c.durationInFrames}>
+        <KineticCaption caption={c} />
+      </Sequence>
+    ))}
+  </>
+);
 
 /** Plays a base clip (video+audio) with short audio fades to smooth seams. */
 const SectionBase: React.FC<{
@@ -109,7 +133,7 @@ const LogoIntro: React.FC = () => {
   );
 };
 
-export const Reel2: React.FC = () => {
+export const Reel2: React.FC<{ showSubs?: boolean }> = ({ showSubs = false }) => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.ink }}>
       <WaitForFonts>
@@ -130,6 +154,7 @@ export const Reel2: React.FC = () => {
             <HookText />
           </Sequence>
           <LogoIntro />
+          {showSubs ? <Captions captions={INTRO_CAPTIONS} /> : null}
         </Sequence>
 
         {/* SECTION 2 — explicación */}
@@ -145,6 +170,7 @@ export const Reel2: React.FC = () => {
           <Sequence from={6} durationInFrames={150} name="lower-third">
             <LowerThird />
           </Sequence>
+          {showSubs ? <Captions captions={EXPLAIN_CAPTIONS} /> : null}
         </Sequence>
 
         {/* CTA */}

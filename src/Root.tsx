@@ -34,6 +34,16 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
+        defaultProps={{ showSubs: false }}
+      />
+      <Composition
+        id="DonnitReel2Subs"
+        component={Reel2}
+        durationInFrames={REEL2_DURATION}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+        defaultProps={{ showSubs: true }}
       />
       <Composition
         id="DonnitReel3"
