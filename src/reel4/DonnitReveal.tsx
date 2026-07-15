@@ -1,14 +1,15 @@
 import {
   AbsoluteFill,
   interpolate,
+  OffthreadVideo,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { COLORS, FONT_FAMILY } from "../donnit/theme";
-import { DonnitLogo } from "../donnit/Wordmark";
+import { COLORS } from "../donnit/theme";
 
-/** A phone mockup showing the Donnit app, popping in with a green flash. */
+/** A phone mockup showing a real recording of the Donnit app. */
 const Phone: React.FC<{ scale: number; rot: number }> = ({ scale, rot }) => {
   const W = 520;
   const H = 1080;
@@ -19,63 +20,27 @@ const Phone: React.FC<{ scale: number; rot: number }> = ({ scale, rot }) => {
         height: H,
         borderRadius: 74,
         background: "#0c0c0e",
-        padding: 16,
+        padding: 14,
         boxShadow: "0 40px 90px rgba(0,0,0,0.55)",
         transform: `scale(${scale}) rotate(${rot}deg)`,
       }}
     >
-      {/* screen */}
+      {/* screen — real app screen recording */}
       <div
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 60,
+          borderRadius: 62,
           overflow: "hidden",
-          background: "#ffffff",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
+          background: "#000",
           position: "relative",
-          fontFamily: FONT_FAMILY,
         }}
       >
-        {/* dynamic island */}
-        <div
-          style={{
-            position: "absolute",
-            top: 26,
-            width: 128,
-            height: 34,
-            borderRadius: 20,
-            background: "#0c0c0e",
-          }}
+        <OffthreadVideo
+          src={staticFile("reel-04/seg/app_screen.mp4")}
+          muted
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
-        <DonnitLogo size={230} />
-        <div
-          style={{
-            marginTop: 34,
-            fontWeight: 800,
-            fontSize: 78,
-            letterSpacing: -2,
-            color: COLORS.ink,
-          }}
-        >
-          Donnit
-        </div>
-        <div
-          style={{
-            marginTop: 40,
-            fontWeight: 700,
-            fontSize: 34,
-            color: COLORS.white,
-            background: COLORS.green,
-            padding: "16px 42px",
-            borderRadius: 999,
-          }}
-        >
-          Compartir
-        </div>
       </div>
     </div>
   );
