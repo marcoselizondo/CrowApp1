@@ -9,31 +9,29 @@ import {
 } from "remotion";
 import { COLORS } from "../donnit/theme";
 
-/** A phone mockup showing a real recording of the Donnit app. */
+/** A phone mockup that plays a real recording of the Donnit app. */
 const Phone: React.FC<{ scale: number; rot: number }> = ({ scale, rot }) => {
-  const W = 520;
-  const H = 1080;
+  const W = 470;
+  const H = 980;
   return (
     <div
       style={{
         width: W,
         height: H,
-        borderRadius: 74,
+        borderRadius: 68,
         background: "#0c0c0e",
-        padding: 14,
-        boxShadow: "0 40px 90px rgba(0,0,0,0.55)",
+        padding: 13,
+        boxShadow: "0 46px 100px rgba(0,0,0,0.6)",
         transform: `scale(${scale}) rotate(${rot}deg)`,
       }}
     >
-      {/* screen — real app screen recording */}
       <div
         style={{
           width: "100%",
           height: "100%",
-          borderRadius: 62,
+          borderRadius: 57,
           overflow: "hidden",
           background: "#000",
-          position: "relative",
         }}
       >
         <OffthreadVideo
@@ -46,7 +44,7 @@ const Phone: React.FC<{ scale: number; rot: number }> = ({ scale, rot }) => {
   );
 };
 
-/** Green flash + phone mockup that punches in on the "Donnit" turn. */
+/** Green flash + floating/rotating phone that shows the real app. */
 export const DonnitReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -61,13 +59,20 @@ export const DonnitReveal: React.FC = () => {
   });
   const out = interpolate(
     frame,
-    [durationInFrames - 8, durationInFrames],
+    [durationInFrames - 12, durationInFrames],
     [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
-  const scale = interpolate(pop, [0, 1], [0.25, 1]);
-  const rot = interpolate(pop, [0, 1], [-10, -3]);
-  const y = interpolate(pop, [0, 1], [120, 0]);
+  const popScale = interpolate(pop, [0, 1], [0.25, 1]);
+
+  // Continuous gentle float + wobble once it has popped in.
+  const settle = interpolate(frame, [6, 22], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const floatY = Math.sin(frame / 18) * 16 * settle;
+  const wobble = (Math.sin(frame / 26) * 4 - 3) * settle + interpolate(pop, [0, 1], [-10, 0]) * (1 - settle);
+  const popY = interpolate(pop, [0, 1], [130, 0]);
 
   return (
     <AbsoluteFill>
@@ -77,10 +82,10 @@ export const DonnitReveal: React.FC = () => {
           justifyContent: "center",
           alignItems: "center",
           opacity: out,
-          transform: `translateY(${y}px)`,
+          transform: `translateY(${-170 + popY + floatY}px)`,
         }}
       >
-        <Phone scale={scale} rot={rot} />
+        <Phone scale={popScale} rot={wobble} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
