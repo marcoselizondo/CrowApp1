@@ -18,6 +18,8 @@ import { VecinoYaLoTiene } from "./reel6/vecino-ya-lo-tiene";
 import { TOTAL_DURATION as REEL6_DURATION } from "./reel6/story6";
 import { BcnTieneUnProblema } from "./reel7/bcn-tiene-un-problema";
 import { TOTAL_DURATION as REEL7_DURATION } from "./reel7/story7";
+import { EstoLoTiraronHoy } from "./reel8/esto-lo-tiraron-hoy";
+import { TOTAL_DURATION as REEL8_DURATION } from "./reel8/story8";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -97,6 +99,14 @@ export const RemotionRoot: React.FC = () => {
         id="DonnitReel7"
         component={BcnTieneUnProblema}
         durationInFrames={REEL7_DURATION}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="DonnitReel8"
+        component={EstoLoTiraronHoy}
+        durationInFrames={REEL8_DURATION}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
