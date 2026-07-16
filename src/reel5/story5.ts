@@ -11,7 +11,7 @@ export const INTRO = [
   { key: "esto", src: staticFile("reel-05/seg/s_esto.mp4"), dur: 42 },
 ];
 
-export const AI = { src: staticFile("reel-05/seg/s_ai.mp4"), dur: 243 };
+export const AI = { src: staticFile("reel-05/seg/s_ai.mp4"), dur: 267 };
 
 export const CTA_DURATION = 90;
 
@@ -83,7 +83,7 @@ export const AI_CAPS: KCaption[] = [
   },
   {
     from: 200,
-    durationInFrames: 34,
+    durationInFrames: 58,
     words: [{ t: "por" }, { t: "vos", s: "green" }],
   },
 ];
