@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   AbsoluteFill,
+  Audio,
   cancelRender,
   interpolate,
   OffthreadVideo,
@@ -269,6 +270,19 @@ export const BcnTieneUnProblema: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <WaitFonts>
+        {/* Lecho musical (royalty-free) con ducking bajo la voz y el clímax */}
+        <Audio
+          src={SRC.music}
+          volume={(f) =>
+            interpolate(
+              f,
+              [0, 52, 60, 315, 324, 462, 470, 592, 600, TOTAL_DURATION],
+              [0.15, 0.15, 0.42, 0.42, 0.16, 0.16, 0.15, 0.15, 0.38, 0.38],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+            )
+          }
+        />
+
         {/* 1 · HOOK */}
         <At from={B.hook[0]} dur={B.hook[1] - B.hook[0]}>
           <Fill src={SRC.hook} muted={false} zoom={false} />

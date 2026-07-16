@@ -14,6 +14,7 @@ export const SRC = {
   tSit: seg("t_sit.mp4"),
   tMoment: seg("t_moment.mp4"),
   donnit: seg("donnit.mp4"),
+  music: seg("music.mp3"),
 } as const;
 
 /** Límites de bloque (frames absolutos @30fps). */
