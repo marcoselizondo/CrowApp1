@@ -227,20 +227,52 @@ const Chat: React.FC = () => {
   );
 };
 
-/* ================= 0:10–0:11.8 · ENTREGA ================= */
-const Entrega: React.FC = () => {
+/* ================= 0:10–0:11.8 · CONTRASTE (por qué Donnit gana) ================= */
+const Contrast: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const pop = spring({ frame, fps, config: { damping: 160, mass: 0.7, stiffness: 130 } });
-  const scale = interpolate(pop, [0, 1], [1.05, 1]);
+  const strike = spring({ frame: frame - 6, fps, config: { damping: 200, mass: 0.6, stiffness: 120 } });
   return (
     <Punch flash={false}>
-      <AbsoluteFill style={{ backgroundColor: WARM.ink, justifyContent: "center", alignItems: "center" }}>
-        <div style={{ width: 860, height: 746, borderRadius: 32, overflow: "hidden", transform: `scale(${scale})`, boxShadow: "0 30px 70px rgba(0,0,0,0.45)" }}>
-          <OffthreadVideo src={SRC.entrega} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <AbsoluteFill
+        style={{
+          backgroundColor: WARM.ink,
+          justifyContent: "center",
+          alignItems: "center",
+          fontFamily: POPPINS,
+          fontWeight: 800,
+          color: WARM.card,
+          textAlign: "center",
+          lineHeight: 1.16,
+          fontSize: 88,
+        }}
+      >
+        <div>
+          <Word delay={0}>Sin pagar </Word>
+          <span style={{ position: "relative", display: "inline-block", color: WARM.pay, fontSize: 66 }}>
+            <Word delay={2}>66€</Word>
+            <span
+              style={{
+                position: "absolute",
+                left: -4,
+                right: -4,
+                top: "52%",
+                height: 7,
+                borderRadius: 4,
+                background: WARM.pay,
+                transform: `scaleX(${strike})`,
+                transformOrigin: "left center",
+              }}
+            />
+          </span>
+          <Word delay={0}>.</Word>
         </div>
-        <div style={{ position: "absolute", bottom: 300, opacity: pop, fontFamily: POPPINS, fontWeight: 700, fontSize: 48, color: WARM.card }}>
-          <Word delay={4}>Cara a cara.</Word> <Word delay={10} style={{ color: WARM.greenBright }}>En tu barrio.</Word>
+        <div>
+          <Word delay={13}>Sin esperar envíos.</Word>
+        </div>
+        <div>
+          <Word delay={26}>Ya está en </Word>
+          <Word delay={30} style={{ color: WARM.greenBright }}>tu calle.</Word>
         </div>
       </AbsoluteFill>
     </Punch>
@@ -312,8 +344,8 @@ export const VecinoYaLoTiene: React.FC = () => {
         <Sequence from={T.splitEnd} durationInFrames={T.chatEnd - T.splitEnd} name="chat">
           <Chat />
         </Sequence>
-        <Sequence from={T.chatEnd} durationInFrames={T.entregaEnd - T.chatEnd} name="entrega">
-          <Entrega />
+        <Sequence from={T.chatEnd} durationInFrames={T.entregaEnd - T.chatEnd} name="contrast">
+          <Contrast />
         </Sequence>
         <Sequence from={T.entregaEnd} durationInFrames={T.resolutionEnd - T.entregaEnd} name="resolution">
           <Resolution />
