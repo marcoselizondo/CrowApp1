@@ -12,7 +12,7 @@ import {
 } from "remotion";
 import { DonnitLogo } from "../donnit/Wordmark";
 import { POPPINS, WARM, waitForReel6Fonts } from "../reel6/theme6";
-import { B, SRC, TOTAL_DURATION } from "./story7";
+import { ARG_REVEAL_LOCAL, B, SRC, TOTAL_DURATION } from "./story7";
 
 const WaitFonts: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [ready, setReady] = useState(false);
@@ -159,6 +159,53 @@ const TopTag: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
+/** Transición con onda: flash tipo foto + zoom-punch + shake + slide. */
+const Snap: React.FC<{ children: React.ReactNode; dir?: number }> = ({ children, dir = 1 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const s = spring({ frame, fps, config: { damping: 130, mass: 0.5, stiffness: 230 } });
+  const scale = interpolate(s, [0, 1], [1.22, 1.04]);
+  const slide = interpolate(s, [0, 1], [dir * 90, 0]);
+  const shake = frame < 9 ? Math.sin(frame * 2.6) * (9 - frame) * 1.7 : 0;
+  const flash = interpolate(frame, [0, 3, 8], [0.85, 0.42, 0], { extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ overflow: "hidden", backgroundColor: "#000" }}>
+      <AbsoluteFill style={{ transform: `translateX(${slide + shake}px) scale(${scale})` }}>
+        {children}
+      </AbsoluteFill>
+      <AbsoluteFill style={{ backgroundColor: "#fff", opacity: flash }} />
+    </AbsoluteFill>
+  );
+};
+
+/** Etiqueta que se estampa (rotada, slam). */
+const Stamp: React.FC<{ text: string; rot?: number; bottom?: number }> = ({ text, rot = -5, bottom = 360 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const s = spring({ frame: frame - 2, fps, config: { damping: 110, mass: 0.5, stiffness: 280 } });
+  const scale = interpolate(s, [0, 1], [1.7, 1], { extrapolateRight: "clamp" });
+  return (
+    <div style={{ position: "absolute", bottom, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: interpolate(s, [0, 0.4], [0, 1], { extrapolateRight: "clamp" }) }}>
+      <div
+        style={{
+          fontFamily: POPPINS,
+          fontWeight: 800,
+          fontSize: 62,
+          color: WARM.card,
+          background: WARM.pay,
+          padding: "10px 32px",
+          borderRadius: 12,
+          transform: `rotate(${rot}deg) scale(${scale})`,
+          boxShadow: "0 14px 34px rgba(0,0,0,0.4)",
+          letterSpacing: 1,
+        }}
+      >
+        {text}
+      </div>
+    </div>
+  );
+};
+
 /** Revelación del clímax: «SOMOS DE ARGENTINA». */
 const ArgentinaReveal: React.FC = () => {
   const frame = useCurrentFrame();
@@ -245,21 +292,32 @@ export const BcnTieneUnProblema: React.FC = () => {
           <Caption text="Barcelona tiene un problema." accent="problema" />
         </At>
 
-        {/* 2 · EVIDENCIA (3 objetos) */}
+        {/* 2 · EVIDENCIA (3 objetos, con onda) */}
         <At from={B.evSilla[0]} dur={B.evSilla[1] - B.evSilla[0]}>
-          <Fill src={SRC.evSilla} />
+          <Snap dir={1}>
+            <Fill src={SRC.evSilla} zoom={false} />
+          </Snap>
           <TopTag text="Todos los días" />
+          <Stamp text="SILLAS" rot={-5} />
         </At>
         <At from={B.evPlantas[0]} dur={B.evPlantas[1] - B.evPlantas[0]}>
-          <Fill src={SRC.evPlantas} />
+          <Snap dir={-1}>
+            <Fill src={SRC.evPlantas} zoom={false} />
+          </Snap>
+          <Stamp text="PLANTAS" rot={4} />
         </At>
         <At from={B.evObjetos[0]} dur={B.evObjetos[1] - B.evObjetos[0]}>
-          <Fill src={SRC.evObjetos} />
+          <Snap dir={1}>
+            <Fill src={SRC.evObjetos} zoom={false} />
+          </Snap>
+          <Stamp text="NEVERAS" rot={-4} />
         </At>
 
         {/* 3 · SEÑOR */}
         <At from={B.senor[0]} dur={B.senor[1] - B.senor[0]}>
-          <Fill src={SRC.senor} />
+          <Snap dir={-1}>
+            <Fill src={SRC.senor} zoom={false} />
+          </Snap>
           <Caption text="Alguien ya la quería." accent="quería" size={70} />
         </At>
 
@@ -272,13 +330,13 @@ export const BcnTieneUnProblema: React.FC = () => {
           <Caption text="Turistas parando a hacerse fotos en la silla" size={52} bottom={240} />
         </At>
         <At from={B.tMoment[0]} dur={B.tMoment[1] - B.tMoment[0]}>
-          <Fill src={SRC.tMoment} muted={false} />
+          <Fill src={SRC.tMoment} muted={false} zoom={false} />
           {/* subtítulo de contexto hasta la revelación */}
-          <Sequence from={0} durationInFrames={74}>
+          <Sequence from={0} durationInFrames={ARG_REVEAL_LOCAL}>
             <Caption text="Y la cámara siguió grabando…" size={50} bottom={240} />
           </Sequence>
-          {/* revelación en el momento exacto del audio */}
-          <Sequence from={74} durationInFrames={B.tMoment[1] - B.tMoment[0] - 74}>
+          {/* revelación en el momento exacto del audio ("we are from Argentina") */}
+          <Sequence from={ARG_REVEAL_LOCAL} durationInFrames={B.tMoment[1] - B.tMoment[0] - ARG_REVEAL_LOCAL}>
             <ArgentinaReveal />
           </Sequence>
         </At>

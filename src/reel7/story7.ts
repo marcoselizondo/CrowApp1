@@ -24,9 +24,12 @@ export const B = {
   senor: [135, 187],
   tEstab: [187, 217],
   tPose: [217, 271],
-  tMoment: [271, 411], // clímax — "we are from Argentina" ~fr 78 dentro del bloque
-  donnit: [411, 540],
-  end: [540, 618],
+  tMoment: [271, 416], // clímax — "we are from Argentina" en fr ~48 dentro del bloque
+  donnit: [416, 545],
+  end: [545, 623],
 } as const;
 
-export const TOTAL_DURATION = 618; // 20.6 s
+/** Frame (local al bloque tMoment) donde arranca "we are from Argentina". */
+export const ARG_REVEAL_LOCAL = 48;
+
+export const TOTAL_DURATION = 623; // ~20.8 s
