@@ -11,6 +11,7 @@ export const SRC = {
   senor: seg("senor.mp4"),
   tEstab: seg("t_estab.mp4"),
   tPose: seg("t_pose.mp4"),
+  tSit: seg("t_sit.mp4"),
   tMoment: seg("t_moment.mp4"),
   donnit: seg("donnit.mp4"),
 } as const;
@@ -22,14 +23,15 @@ export const B = {
   evPlantas: [81, 108],
   evObjetos: [108, 135],
   senor: [135, 187],
-  tEstab: [187, 217],
-  tPose: [217, 271],
-  tMoment: [271, 416], // clímax — "we are from Argentina" en fr ~48 dentro del bloque
-  donnit: [416, 545],
-  end: [545, 623],
+  tEstab: [187, 211],
+  tPose: [211, 256],
+  tSit: [256, 322], // chicos sentándose a hacerse fotos
+  tMoment: [322, 467], // clímax — "we are from Argentina" en fr ~48 dentro del bloque
+  donnit: [467, 596],
+  end: [596, 674],
 } as const;
 
 /** Frame (local al bloque tMoment) donde arranca "we are from Argentina". */
 export const ARG_REVEAL_LOCAL = 48;
 
-export const TOTAL_DURATION = 623; // ~20.8 s
+export const TOTAL_DURATION = 674; // ~22.5 s

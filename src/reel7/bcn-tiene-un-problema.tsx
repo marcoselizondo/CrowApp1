@@ -310,8 +310,14 @@ export const BcnTieneUnProblema: React.FC = () => {
         </At>
         <At from={B.tPose[0]} dur={B.tPose[1] - B.tPose[0]}>
           <Fill src={SRC.tPose} />
-          <Caption text="Turistas parando a hacerse fotos en la silla" size={52} bottom={240} />
         </At>
+        <At from={B.tSit[0]} dur={B.tSit[1] - B.tSit[0]}>
+          <Fill src={SRC.tSit} />
+        </At>
+        {/* subtítulo de contexto sobre las poses (abarca pose + sentados) */}
+        <Sequence from={B.tPose[0]} durationInFrames={B.tSit[1] - B.tPose[0]}>
+          <Caption text="La gente empezó a pararse a hacerse fotos" size={50} bottom={240} />
+        </Sequence>
         <At from={B.tMoment[0]} dur={B.tMoment[1] - B.tMoment[0]}>
           <Fill src={SRC.tMoment} muted={false} zoom={false} />
           {/* subtítulo de contexto hasta la revelación */}
