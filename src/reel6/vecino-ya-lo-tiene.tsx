@@ -66,6 +66,7 @@ const Word: React.FC<{ children: React.ReactNode; delay: number; style?: React.C
     <span
       style={{
         display: "inline-block",
+        whiteSpace: "pre",
         opacity: s,
         transform: `translateY(${interpolate(s, [0, 1], [26, 0])}px)`,
         ...style,
