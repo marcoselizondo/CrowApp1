@@ -211,7 +211,6 @@ const ArgentinaReveal: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const pop = spring({ frame, fps, config: { damping: 120, mass: 0.6, stiffness: 200 } });
-  const sub = spring({ frame: frame - 24, fps, config: { damping: 160, mass: 0.6, stiffness: 150 } });
   const flash = interpolate(frame, [0, 2, 10], [0.4, 0.2, 0], { extrapolateRight: "clamp" });
   return (
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
@@ -233,22 +232,6 @@ const ArgentinaReveal: React.FC = () => {
         «Somos de
         <br />
         <span style={{ color: WARM.greenBright }}>Argentina</span>» 🇦🇷
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 300,
-          fontFamily: POPPINS,
-          fontWeight: 600,
-          fontSize: 46,
-          color: WARM.card,
-          textAlign: "center",
-          opacity: sub,
-          transform: `translateY(${interpolate(sub, [0, 1], [20, 0])}px)`,
-          textShadow: "0 6px 24px rgba(0,0,0,0.7)",
-        }}
-      >
-        (el fundador de Donnit, también)
       </div>
     </AbsoluteFill>
   );
