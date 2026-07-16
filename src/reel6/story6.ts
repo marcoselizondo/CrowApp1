@@ -9,6 +9,7 @@ export const SRC = {
   chat: seg("chat.png"),
   entrega: seg("entrega.mp4"),
   ping: seg("ping.mp3"),
+  music: seg("music.mp3"),
 } as const;
 
 // Precio real que aparece en el clip de Amazon.
