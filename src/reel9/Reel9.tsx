@@ -162,7 +162,7 @@ export const Reel9: React.FC = () => {
         <Sequence from={starts.hook} durationInFrames={66} name="hook-text">
           <Impact lines={["Domingo.", "Final del mundo."]} size={104} top={210} />
         </Sequence>
-        <Sequence from={starts.hook + 14} durationInFrames={70} name="mockup">
+        <Sequence from={starts.hook + 12} durationInFrames={54} name="mockup">
           <PhoneMockup />
         </Sequence>
 
