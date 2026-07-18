@@ -12,7 +12,7 @@ export type Shot = {
 
 /** Ordered narrative shots for the first cut (~21s). */
 export const SHOTS: { key: string; shot: Shot }[] = [
-  { key: "hook", shot: { src: s("hook_couch"), durationInFrames: 66 } },
+  { key: "hook", shot: { src: s("hook_couch"), durationInFrames: 102 } },
   { key: "reads", shot: { src: s("esp_reads"), durationInFrames: 48 } },
   { key: "approach", shot: { src: s("approach"), durationInFrames: 54 } },
   { key: "standoff", shot: { src: s("standoff"), durationInFrames: 60, muteFrom: 30 } },
