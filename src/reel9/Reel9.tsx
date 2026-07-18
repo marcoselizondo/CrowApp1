@@ -12,25 +12,37 @@ import { DonnitLogo } from "../donnit/Wordmark";
 import { WaitForFonts } from "../donnit/WaitForFonts";
 import {
   APP_SEARCH,
-  CTA_DURATION,
+  ENDING_DURATION,
   SHOTS,
   SHOTS_DURATION,
   starts,
   type Shot,
 } from "./story9";
 
-/** A narrative shot; ambient audio can be muted from `muteFrom` (silence beat). */
+// Flag colors
+const CELESTE = "#74ACDF";
+const SUN = "#F6C400";
+const ESP_RED = "#C60B1E";
+const ESP_YEL = "#FFC400";
+
+/** A narrative shot; ambient can be muted within [muteFrom, muteTo). */
 const Clip: React.FC<{ shot: Shot }> = ({ shot }) => (
   <AbsoluteFill style={{ backgroundColor: "black" }}>
     <OffthreadVideo
       src={shot.src}
-      volume={(f) => (shot.muteFrom !== undefined && f >= shot.muteFrom ? 0 : 1)}
+      volume={(f) =>
+        shot.muteFrom !== undefined &&
+        f >= shot.muteFrom &&
+        (shot.muteTo === undefined || f < shot.muteTo)
+          ? 0
+          : 1
+      }
       style={{ width: "100%", height: "100%", objectFit: "cover" }}
     />
   </AbsoluteFill>
 );
 
-/** Floating phone mockup showing the Donnit search (app_search). */
+/** Floating phone mockup with a "Lo quiero" button that gets pressed. */
 const PhoneMockup: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
@@ -42,14 +54,20 @@ const PhoneMockup: React.FC = () => {
   const scale = interpolate(pop, [0, 1], [0.4, 1]);
   const float = Math.sin(frame / 18) * 12;
   const rot = interpolate(pop, [0, 1], [-8, -3]) + Math.sin(frame / 26) * 1.5;
+
+  // Tap on "Lo quiero" right before the app cuts to WhatsApp (~frame 50).
+  const tapT = frame - 42;
+  const press = tapT >= 0 ? interpolate(tapT, [0, 4, 8], [1, 0.9, 1], { extrapolateRight: "clamp" }) : 1;
+  const ripple = tapT >= 0 ? interpolate(tapT, [0, 12], [0.2, 3], { extrapolateRight: "clamp" }) : 0;
+  const rippleOp = tapT >= 0 ? interpolate(tapT, [0, 12], [0.5, 0], { extrapolateRight: "clamp" }) : 0;
+  const btnOp = interpolate(frame, [4, 10, 48, 54], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill
-      style={{
-        justifyContent: "center",
-        alignItems: "flex-end",
-        opacity: out,
-        transform: `translate(-70px, ${-120 + float}px)`,
-      }}
+      style={{ justifyContent: "center", alignItems: "flex-end", opacity: out, transform: `translate(-70px, ${-120 + float}px)` }}
     >
       <div
         style={{
@@ -62,21 +80,34 @@ const PhoneMockup: React.FC = () => {
           transform: `scale(${scale}) rotate(${rot}deg)`,
         }}
       >
-        <div style={{ width: "100%", height: "100%", borderRadius: 44, overflow: "hidden", background: "#000" }}>
+        <div style={{ width: "100%", height: "100%", borderRadius: 44, overflow: "hidden", background: "#000", position: "relative" }}>
           <OffthreadVideo src={APP_SEARCH} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          {/* "Lo quiero" button that presses */}
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 34, display: "flex", justifyContent: "center", opacity: btnOp }}>
+            <div style={{ position: "relative", transform: `scale(${press})` }}>
+              <div style={{ position: "absolute", inset: 0, borderRadius: 999, background: COLORS.green, transform: `scale(${1 + ripple})`, opacity: rippleOp }} />
+              <div style={{ position: "relative", background: COLORS.green, color: "#0b1f12", fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 26, padding: "14px 40px", borderRadius: 999, boxShadow: "0 8px 20px rgba(0,0,0,0.35)" }}>
+                Lo quiero ❤️
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </AbsoluteFill>
   );
 };
 
-/** Anton impact text card. */
-const Impact: React.FC<{ lines: string[]; color?: string; size?: number; top?: number }> = ({
-  lines,
-  color = COLORS.white,
-  size = 96,
-  top,
-}) => {
+/** Hook title: Spain-flag "Domingo." + Argentina-flag "Final del mundo." */
+const flagText = (grad: string): React.CSSProperties => ({
+  background: grad,
+  WebkitBackgroundClip: "text",
+  backgroundClip: "text",
+  color: "transparent",
+  WebkitTextStroke: "2px rgba(0,0,0,0.35)",
+  filter: "drop-shadow(0 5px 14px rgba(0,0,0,0.55))",
+});
+
+const HookTitle: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const inn = spring({ frame, fps, config: { damping: 130, stiffness: 200 } });
@@ -85,11 +116,33 @@ const Impact: React.FC<{ lines: string[]; color?: string; size?: number; top?: n
     extrapolateRight: "clamp",
   });
   const y = interpolate(inn, [0, 1], [40, 0]);
+  const base: React.CSSProperties = { fontFamily: IMPACT_FONT, fontSize: 104, lineHeight: 1.0, textTransform: "uppercase", letterSpacing: 1 };
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", opacity: Math.min(inn, out) }}>
+      <div style={{ marginTop: 200, transform: `translateY(${y}px)`, textAlign: "center", padding: "0 46px" }}>
+        <div style={base}>
+          <span style={flagText(`linear-gradient(180deg, ${ESP_RED} 0 28%, ${ESP_YEL} 28% 72%, ${ESP_RED} 72% 100%)`)}>Domingo.</span>
+        </div>
+        <div style={base}>
+          <span style={flagText(`linear-gradient(180deg, ${CELESTE} 0 30%, #ffffff 30% 70%, ${CELESTE} 70% 100%)`)}>Final del mundo.</span>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/** Anton impact text card. */
+const Impact: React.FC<{ lines: string[]; color?: string; size?: number; top?: number }> = ({ lines, color = COLORS.white, size = 96, top }) => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const inn = spring({ frame, fps, config: { damping: 130, stiffness: 200 } });
+  const out = interpolate(frame, [durationInFrames - 6, durationInFrames], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const y = interpolate(inn, [0, 1], [40, 0]);
   return (
     <AbsoluteFill style={{ justifyContent: top !== undefined ? "flex-start" : "center", alignItems: "center", opacity: Math.min(inn, out) }}>
       <div style={{ marginTop: top, transform: `translateY(${y}px)`, textAlign: "center", padding: "0 60px" }}>
         {lines.map((l, i) => (
-          <div key={i} style={{ fontFamily: IMPACT_FONT, fontSize: size, lineHeight: 1.0, color, textTransform: "uppercase", letterSpacing: 1, textShadow: "0 6px 26px rgba(0,0,0,0.7)" }}>
+          <div key={i} style={{ fontFamily: IMPACT_FONT, fontSize: size, lineHeight: 1.0, color, textTransform: "uppercase", letterSpacing: 1, textShadow: "0 6px 26px rgba(0,0,0,0.75)" }}>
             {l}
           </div>
         ))}
@@ -112,124 +165,17 @@ const ChatBubble: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-/** "VAMOS ARGENTINA" paper sign gag. */
-const Sign: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const pop = spring({ frame, fps, config: { damping: 120, stiffness: 220 } });
-  return (
-    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-      <div style={{ transform: `scale(${pop}) rotate(-6deg)`, background: "#fff", color: "#0b1f12", fontFamily: IMPACT_FONT, fontSize: 74, padding: "26px 44px", borderRadius: 10, boxShadow: "0 16px 40px rgba(0,0,0,0.5)", border: "3px solid #74acdf", textAlign: "center", lineHeight: 1.0 }}>
-        VAMOS<br />ARGENTINA 🇦🇷
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-const CTA: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const pop = spring({ frame, fps, config: { damping: 160, mass: 0.7, stiffness: 130 } });
-  const p2 = spring({ frame: frame - 12, fps, config: { damping: 160, stiffness: 140 } });
-  return (
-    <AbsoluteFill style={{ background: `linear-gradient(160deg, ${COLORS.green} 0%, ${COLORS.greenDark} 100%)`, justifyContent: "center", alignItems: "center", fontFamily: FONT_FAMILY }}>
-      <div style={{ transform: `scale(${interpolate(pop, [0, 1], [0.7, 1])})`, opacity: pop, background: "#fff", padding: 26, borderRadius: 52, boxShadow: "0 22px 54px rgba(20,38,27,0.3)", marginBottom: 44 }}>
-        <DonnitLogo size={180} />
-      </div>
-      <div style={{ transform: `scale(${interpolate(p2, [0, 1], [0.9, 1])})`, opacity: p2, fontWeight: 800, fontSize: 78, color: COLORS.ink, textAlign: "center", letterSpacing: -2, lineHeight: 1.05, padding: "0 60px" }}>
-        Con Donnit,<br />todos ganamos.
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-// Flag colors
-const CELESTE = "#74ACDF";
-const SUN = "#F6C400";
-const ESP_RED = "#C60B1E";
-const ESP_YEL = "#FFC400";
-
-/** Hook title with Spain-flag "Domingo." and Argentina-colored "Final del mundo." */
-const HookTitle: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const inn = spring({ frame, fps, config: { damping: 130, stiffness: 200 } });
-  const out = interpolate(frame, [durationInFrames - 6, durationInFrames], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const y = interpolate(inn, [0, 1], [40, 0]);
-  const base: React.CSSProperties = {
-    fontFamily: IMPACT_FONT,
-    fontSize: 104,
-    lineHeight: 1.0,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-  };
-  const shadow = "0 6px 26px rgba(0,0,0,0.75)";
-  const cel = (t: string) => (
-    <span style={{ color: CELESTE, textShadow: shadow }}>{t}</span>
-  );
-  return (
-    <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", opacity: Math.min(inn, out) }}>
-      <div style={{ marginTop: 200, transform: `translateY(${y}px)`, textAlign: "center", padding: "0 50px" }}>
-        {/* Domingo. — Spain flag bands */}
-        <div style={base}>
-          <span
-            style={{
-              background: `linear-gradient(180deg, ${ESP_RED} 0 28%, ${ESP_YEL} 28% 72%, ${ESP_RED} 72% 100%)`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              filter: "drop-shadow(0 5px 14px rgba(0,0,0,0.6))",
-            }}
-          >
-            Domingo.
-          </span>
-        </div>
-        {/* Final del mundo. — Argentina */}
-        <div style={base}>
-          {cel("Final ")}
-          {cel("d")}
-          <span style={{ color: SUN, textShadow: shadow }}>e</span>
-          {cel("l ")}
-          {cel("mundo.")}
-        </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-/** iOS-style push notification banner with the Donnit logo. */
+/** iOS-style Donnit push notification. */
 const PushNotif: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const inn = spring({ frame, fps, config: { damping: 150, mass: 0.8, stiffness: 170 } });
-  const out = interpolate(frame, [durationInFrames - 10, durationInFrames], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const out = interpolate(frame, [durationInFrames - 10, durationInFrames], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const y = interpolate(inn, [0, 1], [-260, 0]) - out * 260;
   const opacity = interpolate(inn, [0, 1], [0, 1]) * (1 - out);
   return (
     <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center" }}>
-      <div
-        style={{
-          marginTop: 70,
-          transform: `translateY(${y}px)`,
-          opacity,
-          width: 900,
-          display: "flex",
-          alignItems: "center",
-          gap: 22,
-          background: "rgba(245,245,245,0.92)",
-          backdropFilter: "blur(14px)",
-          borderRadius: 40,
-          padding: "24px 30px",
-          boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
-          fontFamily: FONT_FAMILY,
-        }}
-      >
+      <div style={{ marginTop: 70, transform: `translateY(${y}px)`, opacity, width: 900, display: "flex", alignItems: "center", gap: 22, background: "rgba(245,245,245,0.92)", backdropFilter: "blur(14px)", borderRadius: 40, padding: "24px 30px", boxShadow: "0 20px 50px rgba(0,0,0,0.35)", fontFamily: FONT_FAMILY }}>
         <div style={{ borderRadius: 18, overflow: "hidden", flexShrink: 0 }}>
           <DonnitLogo size={82} />
         </div>
@@ -242,6 +188,49 @@ const PushNotif: React.FC = () => {
             A Luca le interesa tu proyector 🎥
           </div>
         </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/** Special closing: match hype card (flags + trophy + date/time + logo). */
+const SpecialEnding: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const arg = spring({ frame: frame - 4, fps, config: { damping: 120, stiffness: 180 } });
+  const esp = spring({ frame: frame - 8, fps, config: { damping: 120, stiffness: 180 } });
+  const cup = spring({ frame: frame - 14, fps, config: { damping: 90, stiffness: 200 } });
+  const date = spring({ frame: frame - 22, fps, config: { damping: 150, stiffness: 160 } });
+  const cupPulse = 1 + Math.sin(frame / 6) * 0.04;
+  const logo = spring({ frame, fps, config: { damping: 160, stiffness: 160 } });
+
+  return (
+    <AbsoluteFill style={{ background: "radial-gradient(120% 90% at 50% 30%, #123322 0%, #060d08 70%)", justifyContent: "center", alignItems: "center", fontFamily: IMPACT_FONT }}>
+      {/* Donnit logo top */}
+      <div style={{ position: "absolute", top: 90, transform: `scale(${logo})`, display: "flex", alignItems: "center", gap: 16 }}>
+        <DonnitLogo size={64} />
+        <span style={{ fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 46, color: "#fff" }}>Donnit</span>
+      </div>
+
+      {/* Flags clashing over the cup */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 10 }}>
+        <div style={{ fontSize: 150, transform: `translateX(${interpolate(arg, [0, 1], [-260, 0])}px)`, opacity: arg }}>🇦🇷</div>
+        <div style={{ fontSize: 200, transform: `scale(${cup * cupPulse})`, filter: "drop-shadow(0 10px 30px rgba(0,0,0,0.6))" }}>🏆</div>
+        <div style={{ fontSize: 150, transform: `translateX(${interpolate(esp, [0, 1], [260, 0])}px)`, opacity: esp }}>🇪🇸</div>
+      </div>
+
+      {/* ARGENTINA vs ESPAÑA */}
+      <div style={{ fontSize: 84, letterSpacing: 1, textTransform: "uppercase", textAlign: "center", transform: `scale(${cup})`, opacity: cup }}>
+        <span style={{ color: CELESTE }}>Argentina</span>
+        <span style={{ color: "#fff", margin: "0 14px" }}>vs</span>
+        <span style={{ background: `linear-gradient(180deg, ${ESP_RED} 0 28%, ${ESP_YEL} 28% 72%, ${ESP_RED} 72% 100%)`, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>España</span>
+      </div>
+      <div style={{ fontSize: 40, color: "#9fe6b0", letterSpacing: 6, marginTop: 6, opacity: cup }}>FINAL DEL MUNDIAL</div>
+
+      {/* Date + time */}
+      <div style={{ marginTop: 44, transform: `translateY(${interpolate(date, [0, 1], [40, 0])}px)`, opacity: date, textAlign: "center" }}>
+        <div style={{ fontSize: 128, color: "#fff", lineHeight: 0.95 }}>19 DE JULIO</div>
+        <div style={{ fontSize: 90, color: SUN }}>21:00</div>
       </div>
     </AbsoluteFill>
   );
@@ -262,7 +251,7 @@ export const Reel9: React.FC = () => {
           );
         })}
 
-        {/* Hook text + phone mockup */}
+        {/* Hook: flag title + phone mockup */}
         <Sequence from={starts.hook} durationInFrames={62} name="hook-text">
           <HookTitle />
         </Sequence>
@@ -270,7 +259,7 @@ export const Reel9: React.FC = () => {
           <PhoneMockup />
         </Sequence>
 
-        {/* Push notification, then WhatsApp reply (Bruno) */}
+        {/* Push notification then WhatsApp reply */}
         <Sequence from={starts.reads} durationInFrames={48} name="push">
           <PushNotif />
         </Sequence>
@@ -278,19 +267,14 @@ export const Reel9: React.FC = () => {
           <ChatBubble text="«A las 18:00 me va bien» ✅" />
         </Sequence>
 
-        {/* Luca's line at the handshake */}
-        <Sequence from={starts.handshake} durationInFrames={70} name="line">
+        {/* Luca's line during the hug (within the organic encounter) */}
+        <Sequence from={starts.encounter + 470} durationInFrames={90} name="line">
           <Impact lines={["«Que gane", "el mejor…»"]} size={92} top={230} />
         </Sequence>
 
-        {/* Sign gag */}
-        <Sequence from={starts.back + 6} durationInFrames={48} name="sign">
-          <Sign />
-        </Sequence>
-
-        {/* CTA */}
-        <Sequence from={SHOTS_DURATION} durationInFrames={CTA_DURATION} name="cta">
-          <CTA />
+        {/* Special closing */}
+        <Sequence from={SHOTS_DURATION} durationInFrames={ENDING_DURATION} name="ending">
+          <SpecialEnding />
         </Sequence>
       </WaitForFonts>
     </AbsoluteFill>
