@@ -85,8 +85,8 @@ const PhoneMockup: React.FC = () => {
           {/* "Lo quiero" button that presses */}
           <div style={{ position: "absolute", left: 0, right: 0, bottom: 34, display: "flex", justifyContent: "center", opacity: btnOp }}>
             <div style={{ position: "relative", transform: `scale(${press})` }}>
-              <div style={{ position: "absolute", inset: 0, borderRadius: 999, background: COLORS.green, transform: `scale(${1 + ripple})`, opacity: rippleOp }} />
-              <div style={{ position: "relative", background: COLORS.green, color: "#0b1f12", fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 26, padding: "14px 40px", borderRadius: 999, boxShadow: "0 8px 20px rgba(0,0,0,0.35)" }}>
+              <div style={{ position: "absolute", inset: 0, borderRadius: 26, background: COLORS.green, transform: `scale(${1 + ripple})`, opacity: rippleOp }} />
+              <div style={{ position: "relative", width: 296, textAlign: "center", background: COLORS.green, color: "#0b1f12", fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 28, padding: "16px 0", borderRadius: 26, boxShadow: "0 8px 20px rgba(0,0,0,0.35)" }}>
                 Lo quiero ❤️
               </div>
             </div>
@@ -126,26 +126,6 @@ const HookTitle: React.FC = () => {
         <div style={base}>
           <span style={flagText(`linear-gradient(180deg, ${CELESTE} 0 30%, #ffffff 30% 70%, ${CELESTE} 70% 100%)`)}>Final del mundo.</span>
         </div>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-/** Anton impact text card. */
-const Impact: React.FC<{ lines: string[]; color?: string; size?: number; top?: number }> = ({ lines, color = COLORS.white, size = 96, top }) => {
-  const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
-  const inn = spring({ frame, fps, config: { damping: 130, stiffness: 200 } });
-  const out = interpolate(frame, [durationInFrames - 6, durationInFrames], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const y = interpolate(inn, [0, 1], [40, 0]);
-  return (
-    <AbsoluteFill style={{ justifyContent: top !== undefined ? "flex-start" : "center", alignItems: "center", opacity: Math.min(inn, out) }}>
-      <div style={{ marginTop: top, transform: `translateY(${y}px)`, textAlign: "center", padding: "0 60px" }}>
-        {lines.map((l, i) => (
-          <div key={i} style={{ fontFamily: IMPACT_FONT, fontSize: size, lineHeight: 1.0, color, textTransform: "uppercase", letterSpacing: 1, textShadow: "0 6px 26px rgba(0,0,0,0.75)" }}>
-            {l}
-          </div>
-        ))}
       </div>
     </AbsoluteFill>
   );
@@ -206,10 +186,10 @@ const SpecialEnding: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: "radial-gradient(120% 90% at 50% 30%, #123322 0%, #060d08 70%)", justifyContent: "center", alignItems: "center", fontFamily: IMPACT_FONT }}>
-      {/* Donnit logo top */}
-      <div style={{ position: "absolute", top: 90, transform: `scale(${logo})`, display: "flex", alignItems: "center", gap: 16 }}>
-        <DonnitLogo size={64} />
-        <span style={{ fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 46, color: "#fff" }}>Donnit</span>
+      {/* Donnit logo top (bigger) */}
+      <div style={{ position: "absolute", top: 90, transform: `scale(${logo})`, display: "flex", alignItems: "center", gap: 22 }}>
+        <DonnitLogo size={118} />
+        <span style={{ fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: 78, color: "#fff", letterSpacing: -1 }}>Donnit</span>
       </div>
 
       {/* Flags clashing over the cup */}
@@ -265,11 +245,6 @@ export const Reel9: React.FC = () => {
         </Sequence>
         <Sequence from={starts.reads + 50} durationInFrames={31} name="chat">
           <ChatBubble text="«A las 18:00 me va bien» ✅" />
-        </Sequence>
-
-        {/* Luca's line during the hug (within the organic encounter) */}
-        <Sequence from={starts.encounter + 470} durationInFrames={90} name="line">
-          <Impact lines={["«Que gane", "el mejor…»"]} size={92} top={230} />
         </Sequence>
 
         {/* Special closing */}
