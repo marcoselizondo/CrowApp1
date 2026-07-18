@@ -143,6 +143,110 @@ const CTA: React.FC = () => {
   );
 };
 
+// Flag colors
+const CELESTE = "#74ACDF";
+const SUN = "#F6C400";
+const ESP_RED = "#C60B1E";
+const ESP_YEL = "#FFC400";
+
+/** Hook title with Spain-flag "Domingo." and Argentina-colored "Final del mundo." */
+const HookTitle: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const inn = spring({ frame, fps, config: { damping: 130, stiffness: 200 } });
+  const out = interpolate(frame, [durationInFrames - 6, durationInFrames], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const y = interpolate(inn, [0, 1], [40, 0]);
+  const base: React.CSSProperties = {
+    fontFamily: IMPACT_FONT,
+    fontSize: 104,
+    lineHeight: 1.0,
+    textTransform: "uppercase",
+    letterSpacing: 1,
+  };
+  const shadow = "0 6px 26px rgba(0,0,0,0.75)";
+  const cel = (t: string) => (
+    <span style={{ color: CELESTE, textShadow: shadow }}>{t}</span>
+  );
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center", opacity: Math.min(inn, out) }}>
+      <div style={{ marginTop: 200, transform: `translateY(${y}px)`, textAlign: "center", padding: "0 50px" }}>
+        {/* Domingo. — Spain flag bands */}
+        <div style={base}>
+          <span
+            style={{
+              background: `linear-gradient(180deg, ${ESP_RED} 0 28%, ${ESP_YEL} 28% 72%, ${ESP_RED} 72% 100%)`,
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              filter: "drop-shadow(0 5px 14px rgba(0,0,0,0.6))",
+            }}
+          >
+            Domingo.
+          </span>
+        </div>
+        {/* Final del mundo. — Argentina */}
+        <div style={base}>
+          {cel("Final ")}
+          {cel("d")}
+          <span style={{ color: SUN, textShadow: shadow }}>e</span>
+          {cel("l ")}
+          {cel("mundo.")}
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+/** iOS-style push notification banner with the Donnit logo. */
+const PushNotif: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const inn = spring({ frame, fps, config: { damping: 150, mass: 0.8, stiffness: 170 } });
+  const out = interpolate(frame, [durationInFrames - 10, durationInFrames], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const y = interpolate(inn, [0, 1], [-260, 0]) - out * 260;
+  const opacity = interpolate(inn, [0, 1], [0, 1]) * (1 - out);
+  return (
+    <AbsoluteFill style={{ justifyContent: "flex-start", alignItems: "center" }}>
+      <div
+        style={{
+          marginTop: 70,
+          transform: `translateY(${y}px)`,
+          opacity,
+          width: 900,
+          display: "flex",
+          alignItems: "center",
+          gap: 22,
+          background: "rgba(245,245,245,0.92)",
+          backdropFilter: "blur(14px)",
+          borderRadius: 40,
+          padding: "24px 30px",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.35)",
+          fontFamily: FONT_FAMILY,
+        }}
+      >
+        <div style={{ borderRadius: 18, overflow: "hidden", flexShrink: 0 }}>
+          <DonnitLogo size={82} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", color: "#5b5b5b", fontSize: 30, fontWeight: 600 }}>
+            <span style={{ textTransform: "uppercase", letterSpacing: 1 }}>Donnit</span>
+            <span>ahora</span>
+          </div>
+          <div style={{ color: "#0b0b0b", fontSize: 40, fontWeight: 700, lineHeight: 1.15, marginTop: 4 }}>
+            A Luca le interesa tu proyector 🎥
+          </div>
+        </div>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 export const Reel9: React.FC = () => {
   let offset = 0;
   return (
@@ -159,15 +263,18 @@ export const Reel9: React.FC = () => {
         })}
 
         {/* Hook text + phone mockup */}
-        <Sequence from={starts.hook} durationInFrames={60} name="hook-text">
-          <Impact lines={["Domingo.", "Final del mundo."]} size={104} top={210} />
+        <Sequence from={starts.hook} durationInFrames={62} name="hook-text">
+          <HookTitle />
         </Sequence>
         <Sequence from={starts.hook + 8} durationInFrames={94} name="mockup">
           <PhoneMockup />
         </Sequence>
 
-        {/* WhatsApp reply */}
-        <Sequence from={starts.reads + 6} durationInFrames={42} name="chat">
+        {/* Push notification, then WhatsApp reply (Bruno) */}
+        <Sequence from={starts.reads} durationInFrames={48} name="push">
+          <PushNotif />
+        </Sequence>
+        <Sequence from={starts.reads + 50} durationInFrames={31} name="chat">
           <ChatBubble text="«A las 18:00 me va bien» ✅" />
         </Sequence>
 
