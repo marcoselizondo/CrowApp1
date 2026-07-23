@@ -24,6 +24,8 @@ import { Reel9 } from "./reel9/Reel9";
 import { TOTAL_DURATION as REEL9_DURATION } from "./reel9/story9";
 import { Reel10 } from "./reel10/Reel10";
 import { TOTAL_DURATION as REEL10_DURATION } from "./reel10/story10";
+import { Reel1Voice } from "./reel1voice/Reel1Voice";
+import { TOTAL_DURATION as REEL1_VOICE_DURATION } from "./reel1voice/story1voice";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -127,6 +129,14 @@ export const RemotionRoot: React.FC = () => {
         id="DonnitReel10"
         component={Reel10}
         durationInFrames={REEL10_DURATION}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="DonnitReel1Voice"
+        component={Reel1Voice}
+        durationInFrames={REEL1_VOICE_DURATION}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
