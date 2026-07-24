@@ -52,11 +52,11 @@ export const Cover: React.FC = () => {
         </span>
       </div>
 
-      {/* Curiosity kicker (top) */}
+      {/* Curiosity kicker (middle, so it doesn't cover the neighbor's face) */}
       <div
         style={{
           position: "absolute",
-          top: 250,
+          top: 760,
           left: 0,
           right: 0,
           textAlign: "center",
@@ -74,11 +74,11 @@ export const Cover: React.FC = () => {
         Esto iba a la
       </div>
 
-      {/* Big headline */}
+      {/* Big headline (middle) */}
       <div
         style={{
           position: "absolute",
-          top: 320,
+          top: 830,
           left: 0,
           right: 0,
           display: "flex",
