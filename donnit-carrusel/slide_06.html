@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --green:#2D7A3A; --lightgreen:#EAF5EB; --dark:#1A1A1A; --red:#E53E3E; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .slide {
+    width:1080px; height:1080px; position:relative; overflow:hidden; background:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:140px 100px 100px;
+  }
+  .logo { position:absolute; top:54px; left:54px; width:76px; height:76px; border-radius:50%;
+    background:var(--green); color:#fff; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:48px; }
+  .num { position:absolute; bottom:46px; right:60px; font-size:30px; font-weight:600; color:#cfcfcf; }
+  .top { font-size:48px; font-weight:700; line-height:1.25; color:var(--dark); max-width:840px; }
+  .face { font-size:300px; line-height:1; margin:20px 0 24px; filter:drop-shadow(0 20px 40px rgba(0,0,0,0.18)); }
+  .punch { font-size:60px; font-weight:800; line-height:1.14; color:var(--green); letter-spacing:-0.5px; }
+  .punch .strong { display:block; margin-top:8px; }
+</style>
+</head>
+<body>
+  <div class="slide">
+    <div class="logo">d</div>
+    <div class="top">Nosotros viendo cómo alguien baja una lámpara perfecta al contenedor:</div>
+    <div class="face">😱</div>
+    <div class="punch">Esa lámpara tenía nombre.<span class="strong">Se llamaba Oportunidad.</span></div>
+    <div class="num">06 / 08</div>
+  </div>
+</body>
+</html>
