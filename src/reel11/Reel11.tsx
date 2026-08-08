@@ -265,9 +265,9 @@ const HookTitle: React.FC = () => {
           textShadow: "0 10px 0 rgba(10,20,14,0.35)",
         }}
       >
-        <div style={{ fontSize: 96 }}>Cosas</div>
-        <div style={{ fontSize: 150, color: COLORS.green }}>GRATIS</div>
-        <div style={{ fontSize: 76 }}>que encontré en la calle</div>
+        <div style={{ fontSize: 168, color: COLORS.green }}>Día 1</div>
+        <div style={{ fontSize: 74 }}>buscando cosas</div>
+        <div style={{ fontSize: 74 }}>en Barcelona 👀</div>
       </div>
     </AbsoluteFill>
   );
@@ -293,13 +293,13 @@ const EndCardR11: React.FC = () => {
       <div style={{ transform: `translateY(${interpolate(pop, [0, 1], [30, 0])}px)`, opacity: pop, marginBottom: 40 }}>
         <div
           style={{
-            fontSize: 66,
+            fontSize: 62,
             fontWeight: 800,
             color: COLORS.ink,
-            lineHeight: 1.1,
+            lineHeight: 1.12,
           }}
         >
-          Todo esto iba<br />a la basura ♻️
+          Súbelo a Donnit<br />y no acaba en la calle ♻️
         </div>
       </div>
       <div style={{ opacity: cta, transform: `scale(${interpolate(cta, [0, 1], [0.9, 1])})`, display: "flex", flexDirection: "column", alignItems: "center" }}>

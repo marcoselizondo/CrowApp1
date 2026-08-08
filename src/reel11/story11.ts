@@ -38,7 +38,7 @@ export const SCENES: Scene[] = [
     key: "aspiradora",
     idx: 3,
     emoji: "🧹",
-    label: "Aspiradora sin cable",
+    label: "Aspiradora inalámbrica",
     price: "GRATIS",
     clips: [{ src: C("aspiradora"), durationInFrames: 84 }],
   },
