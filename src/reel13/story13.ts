@@ -55,11 +55,12 @@ export const SCENES: Scene[] = [
   {
     key: "jackpot",
     idx: 4,
-    clips: [{ src: C("jackpot"), durationInFrames: 120 }],
+    clips: [{ src: C("jackpot"), durationInFrames: 192 }],
     captions: [
-      { from: 6, durationInFrames: 38, words: [w("En"), w("UNA", "bigred"), w("esquina…")] },
-      { from: 46, durationInFrames: 40, words: [w("estantería,"), w("mueble,"), w("un"), w("cuadro")] },
-      { from: 88, durationInFrames: 30, words: [w("todo"), w("GRATIS", "biggreen")], emoji: "💥", emojiAt: 6 },
+      { from: 6, durationInFrames: 40, words: [w("En"), w("UNA", "bigred"), w("esquina…")] },
+      { from: 50, durationInFrames: 44, words: [w("una"), w("estantería,"), w("un"), w("mueble…")] },
+      { from: 104, durationInFrames: 40, words: [w("todo"), w("GRATIS", "green")], emoji: "💥", emojiAt: 6 },
+      { from: 150, durationInFrames: 42, words: [w("¡y"), w("hasta"), w("un"), w("CUADRO!", "biggreen")], emoji: "🖼️", emojiAt: 8 },
     ],
   },
 ];
