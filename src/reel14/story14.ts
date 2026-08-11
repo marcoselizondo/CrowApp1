@@ -31,8 +31,8 @@ export const SCENES: Scene[] = [
     idx: 1,
     clips: [{ src: C("sillas"), durationInFrames: 90 }],
     captions: [
-      { from: 6, durationInFrames: 42, words: [w("Sillas"), w("de"), w("diseño", "biggreen")], emoji: "💺", emojiAt: 8 },
-      { from: 50, durationInFrames: 38, words: [w("en"), w("la"), w("calle", "bigred")] },
+      { from: 6, durationInFrames: 42, words: [w("Sillas"), w("de"), w("DISEÑO", "biggreen")], emoji: "💺", emojiAt: 8 },
+      { from: 50, durationInFrames: 38, words: [w("y"), w("las"), w("TIRARON", "bigred")], emoji: "🤯", emojiAt: 8 },
     ],
   },
   {
@@ -40,7 +40,8 @@ export const SCENES: Scene[] = [
     idx: 2,
     clips: [{ src: C("muebles"), durationInFrames: 90 }],
     captions: [
-      { from: 6, durationInFrames: 80, words: [w("Muebles"), w("blancos,"), w("como"), w("nuevos", "biggreen")] },
+      { from: 6, durationInFrames: 42, words: [w("Muebles"), w("casi"), w("NUEVOS", "biggreen")] },
+      { from: 50, durationInFrames: 38, words: [w("esto"), w("vale"), w("CIENTOS", "bigred"), w("€")] },
     ],
   },
   {
@@ -48,7 +49,8 @@ export const SCENES: Scene[] = [
     idx: 3,
     clips: [{ src: C("lampara"), durationInFrames: 90 }],
     captions: [
-      { from: 6, durationInFrames: 80, words: [w("Una"), w("lámpara"), w("preciosa", "green")], emoji: "💡", emojiAt: 16 },
+      { from: 6, durationInFrames: 42, words: [w("Una"), w("lámpara"), w("preciosa", "green")], emoji: "💡", emojiAt: 10 },
+      { from: 50, durationInFrames: 38, words: [w("en"), w("la"), w("BASURA", "bigred")], emoji: "😳", emojiAt: 8 },
     ],
   },
   {
@@ -59,9 +61,9 @@ export const SCENES: Scene[] = [
       { src: C("jackpot_detail"), durationInFrames: 90 },
     ],
     captions: [
-      { from: 6, durationInFrames: 42, words: [w("En"), w("UNA", "bigred"), w("esquina…")] },
-      { from: 54, durationInFrames: 46, words: [w("cómodas,"), w("cajones…"), w("GRATIS", "green")] },
-      { from: 112, durationInFrames: 78, words: [w("hasta"), w("una"), w("mesita", "biggreen")], emoji: "🪵", emojiAt: 10 },
+      { from: 6, durationInFrames: 42, words: [w("Pero"), w("ESPERA…", "bigred")] },
+      { from: 52, durationInFrames: 48, words: [w("una"), w("esquina"), w("LLENA", "biggreen")], emoji: "🤯", emojiAt: 10 },
+      { from: 112, durationInFrames: 78, words: [w("y"), w("TODO"), w("gratis", "biggreen")], emoji: "🪵", emojiAt: 12 },
     ],
   },
 ];
