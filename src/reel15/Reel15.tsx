@@ -56,7 +56,7 @@ const Label: React.FC<{ children: React.ReactNode; size?: number; color?: string
 
 const CO2: React.FC<{ size?: number }> = ({ size = 27 }) => (
   <span style={{ fontFamily: FONT_FAMILY, fontWeight: 800, fontSize: size, letterSpacing: 1, color: COLORS.white, textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
-    CO<span style={{ fontSize: size * 0.62, verticalAlign: "sub" }}>2</span> CREDITS
+    CO<span style={{ fontSize: size * 0.8 }}>2</span> CREDITS
   </span>
 );
 
@@ -176,7 +176,7 @@ const MoneyToAccess: React.FC = () => {
   const unlock = spring({ frame: frame - Math.round(durationInFrames * 0.55), fps, config: { damping: 200, stiffness: 90 } });
   return (
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: env }}>
-      <div style={{ transform: "translateY(-40px)", position: "relative", width: 320, height: 260, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ transform: "translateY(-140px)", position: "relative", width: 320, height: 260, display: "flex", alignItems: "center", justifyContent: "center" }}>
         {/* dinero */}
         <div style={{ position: "absolute", opacity: 1 - swap, transform: `scale(${interpolate(swap, [0, 1], [1, 0.8])})`, display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
           <div style={{ position: "relative" }}>
@@ -187,8 +187,8 @@ const MoneyToAccess: React.FC = () => {
         </div>
         {/* acceso */}
         <div style={{ position: "absolute", opacity: swap, transform: `scale(${interpolate(unlock, [0, 1], [0.7, 1])})`, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <IconUnlock size={132} color={COLORS.turquoise} sw={5} />
-          <Label size={34} color={COLORS.turquoise}>Acceso</Label>
+          <IconUnlock size={160} color={COLORS.turquoise} sw={5} />
+          <Label size={40} color={COLORS.turquoise}>Acceso</Label>
         </div>
       </div>
     </AbsoluteFill>
@@ -202,7 +202,7 @@ const CreditsWallet: React.FC = () => {
   const filled = Math.min(5, Math.floor(interpolate(frame, [14, 90], [0, 5], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })));
   return (
     <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", opacity: env }}>
-      <div style={{ transform: "translateY(-40px)", width: 460, borderRadius: 30, padding: "28px 30px", background: "rgba(255,255,255,0.06)", border: `2px solid ${COLORS.turquoise}`, backdropFilter: "blur(3px)", boxShadow: "0 16px 44px rgba(0,0,0,0.4)" }}>
+      <div style={{ transform: "translateY(-150px)", width: 470, borderRadius: 30, padding: "30px 32px", background: "rgba(255,255,255,0.06)", border: `2px solid ${COLORS.turquoise}`, backdropFilter: "blur(3px)", boxShadow: "0 16px 44px rgba(0,0,0,0.4)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <IconToken size={44} color={COLORS.turquoise} />
           <CO2 size={30} />
