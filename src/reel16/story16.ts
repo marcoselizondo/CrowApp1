@@ -55,10 +55,10 @@ export const SCENES: Scene[] = [
   {
     key: "mesita",
     idx: 4,
-    clips: [{ src: C("mesita"), durationInFrames: 96 }],
+    clips: [{ src: C("mesita"), durationInFrames: 192 }],
     captions: [
-      { from: 6, durationInFrames: 40, words: [w("Pero"), w("ESPERA…", "bigred")] },
-      { from: 48, durationInFrames: 44, words: [w("una"), w("mesita"), w("con"), w("CAJONES", "biggreen")], emoji: "🤯", emojiAt: 10 },
+      { from: 8, durationInFrames: 48, words: [w("Pero"), w("ESPERA…", "bigred")] },
+      { from: 118, durationInFrames: 70, words: [w("una"), w("mesita"), w("con"), w("CAJONES", "biggreen")], emoji: "🤯", emojiAt: 12 },
     ],
   },
 ];
