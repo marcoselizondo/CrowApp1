@@ -37,6 +37,7 @@ import { Reel14 } from "./reel14/Reel14";
 import { TOTAL_DURATION as REEL14_DURATION } from "./reel14/story14";
 import { Reel15, FPS15, DURATION15 } from "./reel15/Reel15";
 import { Cover15 } from "./reel15/Cover15";
+import { Reel17, FPS17, DURATION17 } from "./reel17/Reel17";
 import { Reel16 } from "./reel16/Reel16";
 import { TOTAL_DURATION as REEL16_DURATION } from "./reel16/story16";
 
@@ -215,6 +216,14 @@ export const RemotionRoot: React.FC = () => {
         component={Reel16}
         durationInFrames={REEL16_DURATION}
         fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="DonnitReel17"
+        component={Reel17}
+        durationInFrames={DURATION17}
+        fps={FPS17}
         width={WIDTH}
         height={HEIGHT}
       />
