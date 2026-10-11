@@ -35,7 +35,8 @@ export const SCENES: Scene[] = [
     idx: 2,
     clips: [{ src: C("silla"), durationInFrames: 90 }],
     captions: [
-      { from: 6, durationInFrames: 80, words: [w("Una"), w("silla"), w("de"), w("OFICINA", "biggreen")], emoji: "💺", emojiAt: 16 },
+      { from: 6, durationInFrames: 42, words: [w("Una"), w("silla"), w("de"), w("OFICINA", "biggreen")], emoji: "💺", emojiAt: 10 },
+      { from: 50, durationInFrames: 38, words: [w("necesita"), w("una"), w("limpieza…", "green")], emoji: "🧽", emojiAt: 8 },
     ],
   },
   {
