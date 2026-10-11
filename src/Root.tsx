@@ -43,6 +43,8 @@ import { StoryPodcast } from "./podcast/StoryPodcast";
 import { StoryPodcastPhoto } from "./podcast/StoryPodcastPhoto";
 import { Reel16 } from "./reel16/Reel16";
 import { TOTAL_DURATION as REEL16_DURATION } from "./reel16/story16";
+import { Reel18 } from "./reel18/Reel18";
+import { TOTAL_DURATION as REEL18_DURATION } from "./reel18/story18";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -218,6 +220,14 @@ export const RemotionRoot: React.FC = () => {
         id="DonnitReel16"
         component={Reel16}
         durationInFrames={REEL16_DURATION}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
+      />
+      <Composition
+        id="DonnitReel18"
+        component={Reel18}
+        durationInFrames={REEL18_DURATION}
         fps={FPS}
         width={WIDTH}
         height={HEIGHT}
