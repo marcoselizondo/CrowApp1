@@ -79,50 +79,39 @@ const S1: React.FC = () => (
   </Frame>
 );
 
-/* 2 — Lo urgente: centros de acopio + qué reciben */
-const Center: React.FC<{ title: string; sub?: string }> = ({ title, sub }) => (
-  <div style={{ padding: "14px 0", borderTop: `2px solid ${LINE}` }}>
-    <div style={{ fontSize: 33, fontWeight: 800 }}>{title}</div>
-    {sub ? <div style={{ fontSize: 26, fontWeight: 500, color: MUTED, marginTop: 2 }}>{sub}</div> : null}
+/* 3 — Donnit como herramienta: centros de acopio y donantes */
+/** Tarjeta de "para quién" en la diapositiva de herramienta. */
+const UseCard: React.FC<{ who: string; text: string }> = ({ who, text }) => (
+  <div style={{ flex: 1, padding: "26px 26px 28px", borderRadius: 20, background: "rgba(244,247,240,0.06)", border: `2px solid ${LINE}` }}>
+    <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: 2, color: COLORS.green, textTransform: "uppercase" }}>{who}</div>
+    <div style={{ fontSize: 31, fontWeight: 700, lineHeight: 1.3, marginTop: 12 }}>{text}</div>
   </div>
 );
 
-const S2: React.FC = () => {
-  const items = [
-    "Agua",
-    "Alimentos no perecederos",
-    "Productos de limpieza",
-    "Higiene personal",
-    "Cobijas",
-    "Ropa de abrigo",
-    "Alimento para mascotas",
-    "Herramientas para quitar lodo",
-  ];
-  return (
-    <Frame n={3}>
-      <Photo src="ensenada/calle_cinta.jpg" height={430} fadeFrom={20} position="center 52%" />
-      <Bottom bottom={96}>
-        <Kicker>También urgente</Kicker>
-        <Title size={56}>Lleva ayuda a los centros de acopio del DIF</Title>
-        <div style={{ marginTop: 22 }}>
-          <Center title="DIF Ensenada" sub="Instalaciones del DIF municipal" />
-          <Center title="Centro Comunitario DIF Floresta" />
-          <Center title="Gimnasio de Maneadero" />
-          <Center title="UBR del DIF estatal" sub="Av. Francisco González Bocanegra, col. Hidalgo" />
+const S2: React.FC = () => (
+  <Frame n={3}>
+    <Photo src="ensenada/calle_cinta.jpg" height={430} fadeFrom={20} position="center 52%" />
+    <Bottom bottom={96}>
+      <Kicker>Una herramienta para todos</Kicker>
+      <Title size={56}>Que la ayuda llegue más fácil a quien la necesita</Title>
+      <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 16 }}>
+        Donnit es gratis y visual: con una foto se ve qué hay, qué falta y quién lo necesita.
+      </div>
+      <div style={{ display: "flex", gap: 20, marginTop: 26 }}>
+        <UseCard who="Centros de acopio" text="Pueden publicar con foto lo que les falta y lo que tienen para repartir." />
+        <UseCard who="Quien dona" text="Ve qué se necesita y lo lleva directo a quien lo pide." />
+      </div>
+      <div style={{ marginTop: 26, paddingTop: 18, borderTop: `2px solid ${LINE}` }}>
+        <div style={{ fontSize: 26, fontWeight: 800, color: CREAM }}>Centros de acopio del DIF</div>
+        <div style={{ fontSize: 24, fontWeight: 500, lineHeight: 1.45, color: MUTED, marginTop: 6 }}>
+          DIF Ensenada (instalaciones del DIF municipal) · Centro Comunitario DIF Floresta · Gimnasio de Maneadero ·
+          UBR del DIF estatal (av. Francisco González Bocanegra, col. Hidalgo)
         </div>
-        <div style={{ marginTop: 16, paddingTop: 18, borderTop: `2px solid ${LINE}`, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 24px" }}>
-          {items.map((t) => (
-            <div key={t} style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 27, fontWeight: 700 }}>
-              <div style={{ width: 11, height: 11, borderRadius: 999, background: COLORS.green, flexShrink: 0 }} />
-              {t}
-            </div>
-          ))}
-        </div>
-        <Note>Confirma horarios con el DIF antes de ir.</Note>
-      </Bottom>
-    </Frame>
-  );
-};
+      </div>
+      <Note>Confirma horarios con el DIF antes de ir.</Note>
+    </Bottom>
+  </Frame>
+);
 
 /* 3 — Cosas de casa con Donnit */
 const Step: React.FC<{ n: number; title: string; sub: string }> = ({ n, title, sub }) => (
