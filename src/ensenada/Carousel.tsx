@@ -82,48 +82,59 @@ const S1: React.FC = () => (
 /* 3 — Donnit como herramienta: centros de acopio y donantes */
 /** Tarjeta de "quién" en la diapositiva de herramienta. */
 const UseCard: React.FC<{ who: string; text: string; children?: React.ReactNode }> = ({ who, text, children }) => (
-  <div style={{ padding: "28px 30px 30px", borderRadius: 22, background: "rgba(244,247,240,0.06)", border: `2px solid ${LINE}` }}>
-    <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: 2, color: COLORS.green, textTransform: "uppercase" }}>{who}</div>
-    <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1.28, marginTop: 12 }}>{text}</div>
+  <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "28px 26px 28px", borderRadius: 22, background: "rgba(244,247,240,0.06)", border: `2px solid ${LINE}` }}>
+    <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: 2, color: COLORS.green, textTransform: "uppercase" }}>{who}</div>
+    <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.28, marginTop: 12, flex: 1 }}>{text}</div>
     {children}
   </div>
 );
 
-/** Buscador simulado de la app (sin emojis: lupa en SVG). */
-const SearchBar: React.FC<{ query: string }> = ({ query }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 22, padding: "16px 24px", borderRadius: 999, background: CREAM, color: BG, fontSize: 30, fontWeight: 700 }}>
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={BG} strokeWidth="2.6" strokeLinecap="round">
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <line x1="15.5" y1="15.5" x2="21" y2="21" />
+/** Pastilla tipo botón/buscador de la app (sin emojis: iconos en SVG). */
+const Pill: React.FC<{ icon: "plus" | "search"; label: string; caret?: boolean }> = ({ icon, label, caret }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 22, padding: "14px 20px", borderRadius: 999, background: icon === "plus" ? COLORS.green : CREAM, color: BG, fontSize: 27, fontWeight: 800 }}>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke={BG} strokeWidth="2.8" strokeLinecap="round">
+      {icon === "plus" ? (
+        <>
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </>
+      ) : (
+        <>
+          <circle cx="10.5" cy="10.5" r="6.5" />
+          <line x1="15.5" y1="15.5" x2="21" y2="21" />
+        </>
+      )}
     </svg>
-    {query}
-    <div style={{ width: 3, height: 32, background: COLORS.green, marginLeft: -8 }} />
+    {label}
+    {caret ? <div style={{ width: 3, height: 28, background: COLORS.green, marginLeft: -6 }} /> : null}
   </div>
 );
 
 const Arrow: React.FC = () => (
-  <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke={COLORS.green} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
-      <line x1="12" y1="4" x2="12" y2="19" />
-      <polyline points="6,13 12,19 18,13" />
+  <div style={{ display: "flex", alignItems: "center", width: 36, flexShrink: 0 }}>
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={COLORS.green} strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="4" y1="12" x2="19" y2="12" />
+      <polyline points="13,6 19,12 13,18" />
     </svg>
   </div>
 );
 
 const S2: React.FC = () => (
   <Frame n={3}>
-    <Photo src="ensenada/calle_cinta.jpg" height={400} fadeFrom={20} position="center 52%" />
-    <Bottom bottom={100}>
-      <Kicker>Una herramienta para todos</Kicker>
-      <Title size={58}>Que la ayuda llegue más fácil a quien la necesita</Title>
+    <Photo src="ensenada/calle_cinta.jpg" height={590} fadeFrom={30} position="center 52%" />
+    <Bottom bottom={110}>
+      <Kicker>Así funciona</Kicker>
+      <Title size={60}>Lo que a ti te sobra, a otra familia le hace falta</Title>
       <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 14 }}>
-        Donnit es gratis y visual: con una foto se ve qué hay y quién lo necesita.
+        Donnit conecta a quien quiere ayudar con quien más lo necesita. Gratis y con fotos.
       </div>
-      <div style={{ marginTop: 26 }}>
-        <UseCard who="Quien dona" text="Sube con una foto lo que puede dar." />
+      <div style={{ display: "flex", alignItems: "stretch", gap: 14, marginTop: 30 }}>
+        <UseCard who="Quien dona" text="Cualquier persona puede subir lo que ya no usa, desde la app o la web.">
+          <Pill icon="plus" label="Donar" />
+        </UseCard>
         <Arrow />
-        <UseCard who="Quien recibe" text="Una persona lo encuentra en el buscador de la app y lo pide gratis.">
-          <SearchBar query="colchón" />
+        <UseCard who="Quien recibe" text="Las familias damnificadas buscan lo que necesitan y lo piden gratis.">
+          <Pill icon="search" label="colchón" caret />
         </UseCard>
       </div>
     </Bottom>
@@ -170,7 +181,7 @@ const S4: React.FC = () => (
       <Kicker>Comparte</Kicker>
       <Title size={80}>Envía esta publicación a tus grupos de Ensenada y Baja California.</Title>
       <div style={{ fontSize: 38, fontWeight: 500, lineHeight: 1.4, color: MUTED, marginTop: 26 }}>
-        A veces lo que a ti te sobra, a otra familia le ayuda a volver a casa.
+        Cada cosa que compartes puede ayudar a una familia a volver a casa.
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 18, marginTop: 50 }}>
         <Img src={staticFile("DonnitLogo.png")} style={{ width: 60, height: 60, borderRadius: 15 }} />
