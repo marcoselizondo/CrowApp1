@@ -63,18 +63,23 @@ const Bottom: React.FC<{ children: React.ReactNode; bottom?: number }> = ({ chil
   <div style={{ position: "absolute", left: 72, right: 72, bottom }}>{children}</div>
 );
 
-/* 1 — Portada + qué pasó */
+/* 1 — Portada: calle hundida + coche volcado, texto abajo */
 const S1: React.FC = () => (
   <Frame n={1}>
-    <Photo src="ensenada/calle_inundada.jpg" fadeFrom={38} position="center 40%" />
-    <AbsoluteFill style={{ background: "linear-gradient(to bottom, rgba(16,25,20,0) 40%, rgba(16,25,20,0.7) 55%, rgba(16,25,20,0.92) 68%)" }} />
-    <Bottom bottom={120}>
+    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 405, overflow: "hidden" }}>
+      <Img src={staticFile("ensenada/calle_grieta.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    </div>
+    <div style={{ position: "absolute", top: 411, left: 0, right: 0, height: 371, overflow: "hidden" }}>
+      <Img src={staticFile("ensenada/coche_volcado.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      <AbsoluteFill style={{ background: "linear-gradient(to bottom, rgba(16,25,20,0) 70%, rgba(16,25,20,1) 100%)" }} />
+    </div>
+    <Bottom bottom={96}>
       <Kicker>Ensenada, Baja California</Kicker>
-      <Title size={92}>Sube tus muebles a <span style={{ color: COLORS.green }}>Donnit</span> y ayuda a Ensenada</Title>
-      <div style={{ fontSize: 36, fontWeight: 600, lineHeight: 1.38, color: MUTED, marginTop: 24 }}>
+      <Title size={78}>Sube tus muebles a <span style={{ color: COLORS.green }}>Donnit</span> y ayuda a Ensenada</Title>
+      <div style={{ fontSize: 31, fontWeight: 600, lineHeight: 1.38, color: MUTED, marginTop: 18 }}>
         La tormenta tropical Rachel inundó más de 25 colonias. Muchas familias perdieron sus muebles y lo que tenían en casa.
       </div>
-      <div style={{ fontSize: 32, fontWeight: 800, color: COLORS.green, marginTop: 22 }}>Te contamos cómo →</div>
+      <div style={{ fontSize: 30, fontWeight: 800, color: COLORS.green, marginTop: 16 }}>Te contamos cómo →</div>
     </Bottom>
   </Frame>
 );
