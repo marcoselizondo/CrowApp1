@@ -123,10 +123,10 @@ const S2: React.FC = () => (
   <Frame n={3}>
     <Photo src="ensenada/calle_cinta.jpg" height={590} fadeFrom={30} position="center 52%" />
     <Bottom bottom={110}>
-      <Kicker>Así funciona</Kicker>
-      <Title size={60}>Lo que a ti te sobra, a otra familia le hace falta</Title>
+      <Kicker>Una herramienta para todos</Kicker>
+      <Title size={60}>Que la ayuda llegue más fácil a quien la necesita</Title>
       <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 14 }}>
-        Donnit conecta a quien quiere ayudar con quien más lo necesita. Gratis y con fotos.
+        Donnit es gratis y visual: con una foto se ve qué hay y quién lo necesita.
       </div>
       <div style={{ display: "flex", alignItems: "stretch", gap: 14, marginTop: 30 }}>
         <UseCard who="Quien dona" text="Cualquier persona puede subir lo que ya no usa, desde la app o la web.">
