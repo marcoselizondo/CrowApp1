@@ -70,12 +70,11 @@ const S1: React.FC = () => (
     <AbsoluteFill style={{ background: "linear-gradient(to bottom, rgba(16,25,20,0) 40%, rgba(16,25,20,0.7) 55%, rgba(16,25,20,0.92) 68%)" }} />
     <Bottom bottom={120}>
       <Kicker>Ensenada, Baja California</Kicker>
-      <Title size={104}>Ensenada<br />necesita ayuda</Title>
+      <Title size={92}>Sube tus muebles a <span style={{ color: COLORS.green }}>Donnit</span> y ayuda a Ensenada</Title>
       <div style={{ fontSize: 36, fontWeight: 600, lineHeight: 1.38, color: MUTED, marginTop: 24 }}>
-        Entre el 11 y el 13 de octubre, la tormenta tropical Rachel inundó más de 25 colonias.
-        Muchas familias perdieron lo que tenían en casa.
+        La tormenta tropical Rachel inundó más de 25 colonias. Muchas familias perdieron sus muebles y lo que tenían en casa.
       </div>
-      <div style={{ fontSize: 32, fontWeight: 800, color: COLORS.green, marginTop: 22 }}>Hay dos formas de ayudar →</div>
+      <div style={{ fontSize: 32, fontWeight: 800, color: COLORS.green, marginTop: 22 }}>Te contamos cómo →</div>
     </Bottom>
   </Frame>
 );
@@ -100,10 +99,10 @@ const S2: React.FC = () => {
     "Herramientas para quitar lodo",
   ];
   return (
-    <Frame n={2}>
+    <Frame n={3}>
       <Photo src="ensenada/calle_cinta.jpg" height={430} fadeFrom={20} position="center 52%" />
       <Bottom bottom={96}>
-        <Kicker>1 · Lo urgente</Kicker>
+        <Kicker>También urgente</Kicker>
         <Title size={56}>Lleva ayuda a los centros de acopio del DIF</Title>
         <div style={{ marginTop: 22 }}>
           <Center title="DIF Ensenada" sub="Instalaciones del DIF municipal" />
@@ -139,10 +138,10 @@ const Step: React.FC<{ n: number; title: string; sub: string }> = ({ n, title, s
 );
 
 const S3: React.FC = () => (
-  <Frame n={3}>
+  <Frame n={2}>
     <Photo src="ensenada/arbol_coche.jpg" height={500} fadeFrom={22} position="center 58%" />
     <Bottom bottom={96}>
-      <Kicker>2 · Volver a tener hogar</Kicker>
+      <Kicker>Volver a tener hogar</Kicker>
       <Title size={56}>Las familias también necesitan cosas de casa</Title>
       <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 16 }}>
         Colchones, cobijas, ollas, platos, muebles básicos, electrodomésticos pequeños, ropa de abrigo.
@@ -175,7 +174,7 @@ const S4: React.FC = () => (
   </Frame>
 );
 
-const ALL = [S1, S2, S3, S4];
+const ALL = [S1, S3, S2, S4];
 
 export const EnsenadaCarousel: React.FC = () => {
   const frame = useCurrentFrame();
