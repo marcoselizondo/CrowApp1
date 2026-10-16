@@ -80,35 +80,52 @@ const S1: React.FC = () => (
 );
 
 /* 3 — Donnit como herramienta: centros de acopio y donantes */
-/** Tarjeta de "para quién" en la diapositiva de herramienta. */
-const UseCard: React.FC<{ who: string; text: string }> = ({ who, text }) => (
-  <div style={{ flex: 1, padding: "26px 26px 28px", borderRadius: 20, background: "rgba(244,247,240,0.06)", border: `2px solid ${LINE}` }}>
-    <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: 2, color: COLORS.green, textTransform: "uppercase" }}>{who}</div>
-    <div style={{ fontSize: 31, fontWeight: 700, lineHeight: 1.3, marginTop: 12 }}>{text}</div>
+/** Tarjeta de "quién" en la diapositiva de herramienta. */
+const UseCard: React.FC<{ who: string; text: string; children?: React.ReactNode }> = ({ who, text, children }) => (
+  <div style={{ padding: "28px 30px 30px", borderRadius: 22, background: "rgba(244,247,240,0.06)", border: `2px solid ${LINE}` }}>
+    <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: 2, color: COLORS.green, textTransform: "uppercase" }}>{who}</div>
+    <div style={{ fontSize: 36, fontWeight: 700, lineHeight: 1.28, marginTop: 12 }}>{text}</div>
+    {children}
+  </div>
+);
+
+/** Buscador simulado de la app (sin emojis: lupa en SVG). */
+const SearchBar: React.FC<{ query: string }> = ({ query }) => (
+  <div style={{ display: "flex", alignItems: "center", gap: 16, marginTop: 22, padding: "16px 24px", borderRadius: 999, background: CREAM, color: BG, fontSize: 30, fontWeight: 700 }}>
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke={BG} strokeWidth="2.6" strokeLinecap="round">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <line x1="15.5" y1="15.5" x2="21" y2="21" />
+    </svg>
+    {query}
+    <div style={{ width: 3, height: 32, background: COLORS.green, marginLeft: -8 }} />
+  </div>
+);
+
+const Arrow: React.FC = () => (
+  <div style={{ display: "flex", justifyContent: "center", margin: "10px 0" }}>
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke={COLORS.green} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="4" x2="12" y2="19" />
+      <polyline points="6,13 12,19 18,13" />
+    </svg>
   </div>
 );
 
 const S2: React.FC = () => (
   <Frame n={3}>
-    <Photo src="ensenada/calle_cinta.jpg" height={430} fadeFrom={20} position="center 52%" />
-    <Bottom bottom={96}>
+    <Photo src="ensenada/calle_cinta.jpg" height={400} fadeFrom={20} position="center 52%" />
+    <Bottom bottom={100}>
       <Kicker>Una herramienta para todos</Kicker>
-      <Title size={56}>Que la ayuda llegue más fácil a quien la necesita</Title>
-      <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 16 }}>
-        Donnit es gratis y visual: con una foto se ve qué hay, qué falta y quién lo necesita.
+      <Title size={58}>Que la ayuda llegue más fácil a quien la necesita</Title>
+      <div style={{ fontSize: 30, fontWeight: 600, lineHeight: 1.4, color: MUTED, marginTop: 14 }}>
+        Donnit es gratis y visual: con una foto se ve qué hay y quién lo necesita.
       </div>
-      <div style={{ display: "flex", gap: 20, marginTop: 26 }}>
-        <UseCard who="Centros de acopio" text="Pueden publicar con foto lo que les falta y lo que tienen para repartir." />
-        <UseCard who="Quien dona" text="Ve qué se necesita y lo lleva directo a quien lo pide." />
+      <div style={{ marginTop: 26 }}>
+        <UseCard who="Quien dona" text="Sube con una foto lo que puede dar." />
+        <Arrow />
+        <UseCard who="Quien recibe" text="Una persona lo encuentra en el buscador de la app y lo pide gratis.">
+          <SearchBar query="colchón" />
+        </UseCard>
       </div>
-      <div style={{ marginTop: 26, paddingTop: 18, borderTop: `2px solid ${LINE}` }}>
-        <div style={{ fontSize: 26, fontWeight: 800, color: CREAM }}>Centros de acopio del DIF</div>
-        <div style={{ fontSize: 24, fontWeight: 500, lineHeight: 1.45, color: MUTED, marginTop: 6 }}>
-          DIF Ensenada (instalaciones del DIF municipal) · Centro Comunitario DIF Floresta · Gimnasio de Maneadero ·
-          UBR del DIF estatal (av. Francisco González Bocanegra, col. Hidalgo)
-        </div>
-      </div>
-      <Note>Confirma horarios con el DIF antes de ir.</Note>
     </Bottom>
   </Frame>
 );
