@@ -121,7 +121,8 @@ const Arrow: React.FC = () => (
 
 const S2: React.FC = () => (
   <Frame n={3}>
-    <Photo src="ensenada/calle_cinta.jpg" height={590} fadeFrom={30} position="center 52%" />
+    <Photo src="ensenada/casa_lodo.jpg" height={590} fadeFrom={30} position="center 30%" />
+    <div style={{ position: "absolute", top: 572, right: 72, fontSize: 22, fontWeight: 600, color: "rgba(244,247,240,0.5)" }}>Foto: Nexos Noticias</div>
     <Bottom bottom={110}>
       <Kicker>Una herramienta para todos</Kicker>
       <Title size={60}>Que la ayuda llegue más fácil a quien la necesita</Title>
