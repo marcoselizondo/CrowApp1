@@ -280,7 +280,16 @@ export const RemotionRoot: React.FC = () => {
         durationInFrames={1}
         fps={FPS}
         width={WIDTH}
+        height={HEIGHT}        defaultProps={{ photo: "ensenada/casa_lodo.jpg", position: "40% center", credit: "Nexos Noticias" }}
+      />
+      <Composition
+        id="DonnitEnsenadaReelCoverCalle"
+        component={EnsenadaReelCover}
+        durationInFrames={1}
+        fps={FPS}
+        width={WIDTH}
         height={HEIGHT}
+        defaultProps={{ photo: "ensenada/calle_inundada.jpg", position: "45% center" }}
       />
     </>
   );

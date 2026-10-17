@@ -10,18 +10,27 @@ import { COLORS, FONT_FAMILY } from "../donnit/theme";
 const BG = "#101914";
 const CREAM = "#f4f7f0";
 
-export const EnsenadaReelCover: React.FC = () => (
+export const EnsenadaReelCover: React.FC<{ photo: string; position?: string; credit?: string }> = ({
+  photo,
+  position = "center",
+  credit,
+}) => (
   <AbsoluteFill style={{ backgroundColor: BG, fontFamily: FONT_FAMILY, color: CREAM }}>
     <Img
-      src={staticFile("ensenada/calle_inundada.jpg")}
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "45% center" }}
+      src={staticFile(photo)}
+      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: position }}
     />
     <AbsoluteFill
       style={{
         background:
-          "linear-gradient(to bottom, rgba(16,25,20,0.35) 0%, rgba(16,25,20,0) 18%, rgba(16,25,20,0) 36%, rgba(16,25,20,0.82) 50%, rgba(16,25,20,0.96) 66%, rgba(16,25,20,1) 100%)",
+          "linear-gradient(to bottom, rgba(16,25,20,0.35) 0%, rgba(16,25,20,0) 18%, rgba(16,25,20,0) 36%, rgba(16,25,20,0.82) 50%, rgba(16,25,20,0.97) 64%, rgba(16,25,20,1) 76%)",
       }}
     />
+    {credit ? (
+      <div style={{ position: "absolute", top: 270, right: 60, fontSize: 24, fontWeight: 600, color: "rgba(244,247,240,0.75)", textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>
+        Foto: {credit}
+      </div>
+    ) : null}
     <div style={{ position: "absolute", left: 80, right: 80, top: 930 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 34, fontWeight: 800, letterSpacing: 4, color: COLORS.green, textTransform: "uppercase" }}>
         <div style={{ width: 52, height: 5, borderRadius: 4, background: COLORS.green }} />
