@@ -42,6 +42,7 @@ import { Cover17 } from "./reel17/Cover17";
 import { StoryPodcast } from "./podcast/StoryPodcast";
 import { StoryPodcastPhoto } from "./podcast/StoryPodcastPhoto";
 import { EnsenadaCarousel, SLIDES as ENSENADA_SLIDES } from "./ensenada/Carousel";
+import { EnsenadaReelCover } from "./ensenada/ReelCover";
 import { Reel16 } from "./reel16/Reel16";
 import { TOTAL_DURATION as REEL16_DURATION } from "./reel16/story16";
 import { Reel18 } from "./reel18/Reel18";
@@ -272,6 +273,14 @@ export const RemotionRoot: React.FC = () => {
         fps={FPS}
         width={1080}
         height={1350}
+      />
+      <Composition
+        id="DonnitEnsenadaReelCover"
+        component={EnsenadaReelCover}
+        durationInFrames={1}
+        fps={FPS}
+        width={WIDTH}
+        height={HEIGHT}
       />
     </>
   );
